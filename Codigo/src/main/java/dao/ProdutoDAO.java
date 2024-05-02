@@ -60,7 +60,7 @@ public class ProdutoDAO extends DAO {
             st.setInt(3, produto.getQuantidade());
             st.setString(4, produto.getFornecedor());
             st.setString(5, produto.getLote());
-            st.setDate(6, Date.valueOf(produto.getDataValidade())); // Converta LocalDate para Date
+            st.setDate(6, Date.valueOf(produto.getDataValidade()));
             st.executeUpdate();
             st.close();
             status = true;
@@ -102,17 +102,15 @@ public class ProdutoDAO extends DAO {
 
 	
 	public List<Produto> getOrderByID() {
-		return get("id");		
+		return get("id");
 	}
-	
 	
 	public List<Produto> getOrderByNome() {
-		return get("nome");		
+		return get("nome");
 	}
 	
-	
 	public List<Produto> getOrderByCategoria() {
-		return get("categoria");		
+		return get("categoria");
 	}
 	
 	
