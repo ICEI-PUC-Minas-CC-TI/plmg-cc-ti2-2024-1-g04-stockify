@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stockify</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/navbar.css">
+  <link rel="stylesheet" href="../assets/css/cadastroAlimentos.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+  <script src="../assets/js/cadastroAlimento.js"></script>
+  <script src="../assets/js/general.js"></script>
+</head>
+
+<body>
+
+  <div class="container-fluid p-0 d-flex h-100">
+    <div id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white offcanvas-md offcanvas-start"
+      style="width: 280px;">
+      <a href="homepage.html" class="navbar-brand">
+        <h5>Stockify</h5>
+      </a>
+      <hr>
+      <ul class="mynav nav nav-pills flex-column mb-auto">
+        <ul class="mynav nav nav-pills flex-column mb-auto">
+          <li class="nav-item mb-1">
+            <a href="calendario.html" class="" onclick="btn1()">
+              Calendário
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a href="funcionarios.html" class="" onclick="btn2()">
+              Administração de Funcionários
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a href="alimentos.html" class="" onclick="btn3()">
+              Estoque
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a href="cadastroAlimento.html" class="" onclick="btn4()">
+              Cadastro de Produtos
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a href="fornecedor.html" class="" onclick="btn5()">
+              Fornecedores
+            </a>
+          </li>
+          <li class="nav-item mb-1">
+            <a href="#" class="" onclick="">
+              Suporte
+            </a>
+          </li>
+        </ul>
+      </ul>
+      <hr>
+      <div class="d-flex">
+        <img src="https://fakeimg.pl/300/" width="50" height="26" class="img-fluid rounded-circle me-2" alt="">
+        <span>
+          <h6 class="mt-1 mb-0" id="usernameDisplay"></h6>
+          <small class="" id="emailDisplay"></small>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            class="bi bi-box-arrow-left" viewBox="0 0 16 16" onclick="logout()">
+            <path fill-rule="evenodd"
+              d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
+            <path fill-rule="evenodd"
+              d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+          </svg>
+        </span>
+      </div>
+    </div>
+    <div class="bg-light flex-fill">
+      <div class="p-2 d-md-none d-flex text-white bg-dark">
+        <a href="#" class="text-white" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar">
+          <i class="fa-solid fa-bars"></i>
+        </a>
+        <span class="ms-3">Stockify</span>
+      </div>
+      <div class="p-4">
+        <div id="content"> <!--ADICIONAR O CONTEÚDO DO HTML DENTRO DESSA DIV-->
+          <div class="bg-light flex-fill">
+            <div class="p-4">
+              <div id="content">
+                <div class="form-container">
+                  <h2 class="text-center">Cadastro de Produtos</h2>
+                  <form>
+                    <label for="m-Produto">Produto</label>
+                    <input id="m-Produto" type="text" required />
+
+                    <label for="m-Categoria">Categoria</label>
+                    <input id="m-Categoria" type="text" required />
+
+                    <label for="m-Quantidade">Quantidade</label>
+                    <input id="m-Quantidade" type="number" required />
+
+                    <label for="m-Fornecedor">Fornecedor</label>
+                    <input id="m-Fornecedor" type="text" required />
+
+                    <label for="m-Fornecedor">Lote</label>
+                    <input id="m-Lote" type="text" required />
+
+                    <label for="m-Fornecedor">Data de Validade </label>
+                    <input id="m-Data" type="text" required />
+                    <div class="text-center">
+                      <button id="btnSalvar" class="btn bg-dark text-white mt-3 w-50">Salvar</button>
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+</body>
+
+<style>
+  
+html,
+body {
+  height: 100%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.mynav {
+  color: #fff;
+}
+
+.mynav li a {
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+  padding: 8px 5px;
+}
+
+.mynav li a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a i {
+  width: 25px;
+  text-align: center;
+}
+
+.notification-badge {
+  background-color: rgba(255, 255, 255, 0.7);
+  float: right;
+  color: #222;
+  font-size: 14px;
+  padding: 0px 8px;
+  border-radius: 2px;
+}
+
+#results{
+  display: inline-flex;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+svg{
+  margin-left: 20px;
+  margin-bottom: 17px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;700&family=Roboto:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  width: 90%;
+  height: 80%;
+  border-radius: 10px;
+}
+
+.header {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto 12px;
+}
+
+.header span {
+  font-weight: 900;
+  font-size: 20px;
+  word-break: break-all;
+}
+
+#new {
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(10, 31, 10);
+}
+
+.divTable {
+  padding: 10px;
+  width: auto; 
+  height:inherit; 
+  overflow:auto;
+}
+
+.divTable::-webkit-scrollbar {
+  width: 12px;
+  background-color: whitesmoke; 
+}
+
+.divTable::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: darkgray; 
+}
+
+table {
+  width: 100%;
+  border-spacing: 10px;
+  word-break: break-all;
+  border-collapse: collapse;
+}
+
+tr {
+  border-bottom: 1px solid rgb(238, 235, 235)!important;
+}
+
+tbody tr td {
+  vertical-align: text-top;
+  padding: 6px;
+  max-width: 50px;
+}
+
+thead tr th {
+  padding: 5px;
+  text-align: start;
+  margin-bottom: 50px;
+}
+
+tbody tr {
+  margin-bottom: 50px;
+}
+
+thead tr th.acao {
+  width: 100px!important;
+  text-align: center;
+}
+
+tbody tr td.acao {
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 10px;
+  }
+  
+  .header span {
+    font-size: 15px;
+  }
+
+  #new {
+    padding: 5px;
+    font-size: 10px;
+  }
+
+  thead tr th.acao {
+    width: auto!important;
+  }
+  
+  td button i {
+    font-size: 20px!important;
+  }
+
+  td button i:first-child {
+    margin-right: 0;
+  }
+
+}
+
+@keyframes modal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -60px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+td button {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+td button i {
+  font-size: 25px;
+}
+
+td button i:first-child {
+  margin-right: 10px;
+}
+
+.form-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  border-radius: 10px;
+  width: 50%;
+}
+
+.form-container label {
+  font-size: 18px;
+  width: 100%;
+}
+
+.form-container input {
+  width: 100%;
+  outline: none;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border: 1px solid #0f0e0e;
+  border-radius: 5px;
+}
+
+/* Ajuste responsivo se necessário */
+@media (max-width: 700px) {
+  .form-container {
+    width: 90%;
+  }
+}
+
+</style>
+
+</html>

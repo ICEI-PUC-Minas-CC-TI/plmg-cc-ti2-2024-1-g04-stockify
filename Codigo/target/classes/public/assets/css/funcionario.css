@@ -1,0 +1,72 @@
+#employeeCardContainer {
+    display: flex;
+    margin: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between; /* ou justify-content: flex-start; */
+    gap: 16px
+}
+
+.employeeCard {
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    min-width: 300px; /* Defina o tamanho máximo desejado */
+    border: 1px solid #ccc; /* Adicione uma borda para separar visualmente os cards */
+    border-radius: 8px; /* Adicione bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adicione uma sombra suave */
+}
+
+  
+.employeeCard header {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    border-radius: 10px;
+    width: 50%;
+  }
+
+input {
+    width: 100%;
+    outline: none;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    border: 1px solid #0f0e0e;
+    border-radius: 5px;
+  }
+
+button{
+    margin: 0px 15px 0px 15px;
+}
+
+article button{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border-radius: 5px;
+    border: 3px;
+    color: white;
+    background-color: #212529;
+    height: 38px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+article h2{
+    display: block;
+    margin-left: 80px;
+    margin-right: 80px;
+    text-transform: capitalize;
+}
+
+@media screen {
+    
+}

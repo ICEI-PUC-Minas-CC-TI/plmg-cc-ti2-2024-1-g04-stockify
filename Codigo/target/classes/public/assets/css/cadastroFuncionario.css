@@ -1,0 +1,25 @@
+.form-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    border-radius: 10px;
+    width: 50%;
+  }
+  
+  .form-container label {
+    font-size: 18px;
+    width: 100%;
+    margin-left: 10px;
+  }
+  
+  .form-container input {
+    width: 100%;
+    outline: none;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    border: 1px solid #0f0e0e;
+    border-radius: 5px;
+  }

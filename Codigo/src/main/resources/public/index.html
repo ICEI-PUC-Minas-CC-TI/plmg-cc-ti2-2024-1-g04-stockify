@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,inital-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <title>Stockify</title>
+
+</head>
+
+<body>
+  <header>
+    <div class="interface">
+      <div class="logo">
+        <a href="#">
+          <img src="../codigo/assets/images/logo.png" alt="logo" style="width: 70px; height: 70px;">
+        </a>
+      </div>
+      <nav class="menu-desktop">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#especialidades">Serviços</a></li>
+          <li><a href="#sobre">Sobre nós</a></li>
+          <li><a href="pages/login.html">Login</a></li>
+        </ul>
+      </nav>
+      <div class="sam-contato">
+        <a href="#sobre">
+          <button>Contato</button>
+        </a>
+      </div>
+    </div>
+    </div>
+  </header>
+  <main>
+    <section class="topo-do-site">
+      <div class="interface">
+        <div class="flex">
+          <div class="txt-topo-site">
+            <h1>Bem-vindo ao Stockify<span>.</span></h1>
+            <p>Seja bem-vindo à plataforma que transforma a complexidade do controle de estoque em facilidade e
+              eficácia. Nosso software foi desenvolvido para atender às necessidades de empresas de todos os tamanhos,
+              oferecendo uma gestão completa e intuitiva de seu inventário.
+            </p>
+            <div class="sam-contato">
+              <a href="#sobre">
+                <button>Contato</button>
+              </a>
+            </div>
+          </div>
+          <div class="img-topo-do-site">
+            <img src="../codigo/assets/images/logo.png" alt="" style="width: 300px; height: 300px;">
+          </div>
+        </div>
+    </section>
+    <section class="especialidades" , id="espcialidades">
+      <div class="interface">
+        <h2 class="titulo">Nossos <span>Serviços</span></h2>
+        <div class="flex">
+          <div class="especialidades-box">
+            <i class="bi bi-lightbulb"></i>
+            <h3>Demanda e Planejamento</h3>
+            <p>É crucial entender a demanda dos produtos para garantir que haja a quantidade certa de itens em estoque,
+              nem excesso nem falta. Isso envolve analisar dados históricos de vendas, sazonalidade, tendências de
+              mercado e fatores externos para prever com precisão a quantidade de produtos necessários em um determinado
+              período.</p>
+          </div>
+          <div class="especialidades-box">
+            <i class="bi bi-archive"></i>
+            <h3>Controle e Organização</h3>
+            <p>Manter um controle preciso do estoque é essencial. Isso inclui implementar sistemas e processos
+              eficientes para registrar todas as entradas e saídas de produtos, monitorar os níveis de estoque
+              atualizados e identificar quaisquer discrepâncias rapidamente.</p>
+          </div>
+          <div class="especialidades-box">
+            <i class="bi bi-diagram-2"></i>
+            <h3>Cadeia de Suprimentos</h3>
+            <p>Manter uma gestão eficaz da cadeia de suprimentos é fundamental para garantir a qualidade, eficiência e
+              pontualidade em todo o processo. Isso inclui a seleção cuidadosa de fornecedores confiáveis, a negociação
+              de termos e condições favoráveis, além da manutenção de uma comunicação clara e eficiente ao longo de toda
+              a cadeia.</p>
+          </div>
+        </div>
+    </section>
+    <section class="sobre" , id="sobre">
+      <div class="interface">
+        <div class="flex">
+          <div class="img-sobre">
+            <img src="assets/Sem título (1).png" alt="" style="width: 330px; height: 600px;">
+          </div>
+          <div class="txt-sobre">
+            <h2>Um pouco <span>Sobre Nós</span></h2>
+            <p>Nós, estudantes de Ciência da Computação na PUC Minas, unimos forças para desenvolver uma ferramenta
+              prática e eficiente para ajudar negócios com logística e controle de estoque.
+              Nosso foco é simplificar a gestão de estoque para empresas, fornecendo uma solução intuitiva e acessível.
+              Entendemos os desafios enfrentados por pequenos e médios comerciantes e buscamos oferecer uma resposta
+              prática a essas dificuldades.</p>
+            <p>Acreditamos no poder da tecnologia para simplificar processos e impulsionar negócios. Estamos
+              comprometidos em oferecer uma solução que faça a diferença no dia a dia dos empreendedores.
+              Nosso software é o resultado do nosso empenho em criar uma ferramenta valiosa, fácil de usar e que traga
+              benefícios reais para os usuários.</p>
+            <h2>Nossos <span>Contatos:</span></h2>
+            <div class="sam-social">
+              <a href="https://www.linkedin.com/in/samuel-campos-53b70b233/" target="_blank"><button><i
+                    class="bi bi-linkedin"></i></button></a>
+              <a href="https://wa.me/5531986058203" target="_blank"><button><i class="bi bi-whatsapp"></i></button></a>
+              <a href="mailto:samuelfcampos2410@gmail.com"><button><i class="bi bi-envelope-at"></i></button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+<style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ffffff;
+  height: 200px;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.interface {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.sam-contato button {
+  padding: 10px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #5f6cc8;
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.sam-contato button:hover {
+  padding: 10px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #949ee5;
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #4f5582;
+}
+
+h2.titulo {
+  color: #050505;
+  font-size: 38px;
+  text-align: center;
+}
+
+h2.titulo span {
+  color: #4f5582;
+}
+
+header>.interface {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header a {
+  color: #808080;
+  text-decoration: none;
+}
+
+header a:hover {
+  color: #050505;
+}
+
+header nav ul {
+  list-style-type: none;
+}
+
+header nav ul li {
+  display: inline-block;
+  padding: 0 40px;
+}
+
+/* Topo do site */
+
+section.topo-do-site {
+  padding: 40px 4%;
+}
+
+section.topo-do-site .flex {
+  align-items: center;
+  justify-content: center;
+  gap: 90px;
+}
+
+.topo-do-site h1 {
+  font-size: 42px;
+  color: #050505;
+  line-height: 40px;
+}
+
+.topo-do-site .txt-topo-site p {
+  color: #050505;
+  margin: 40px 0;
+}
+
+.topo-do-site .txt-topo-site p1 {
+  color: #050505;
+  margin: 40px 0;
+}
+
+.topo-do-site .img-topo-do-site img {
+  position: relative;
+  animation: flutuar 2s ease-in-out infinite alternate;
+}
+
+@keyframes flutuar {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: 30px
+  }
+}
+
+/* especialidades */
+
+section.especialidades {
+  padding: 40px 4%;
+}
+
+section.especialidades .flex {
+  gap: 60px;
+}
+
+.especialidades .especialidades-box {
+  color: #050505;
+  padding: 40px;
+  border-radius: 25px;
+  margin-top: 35px;
+  transition: 0.2s;
+}
+
+.especialidades .especialidades-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px #050505;
+}
+
+.especialidades .especialidades-box i {
+  font-size: 70px;
+  color: #4f5582;
+  ;
+}
+
+.especialidades .especialidades-box p {
+  text-align: start;
+}
+
+.especialidades .especialidades-box h3 {
+  font-size: 25px;
+  margin: 15px 0;
+}
+
+/* sobre */
+
+section.sobre {
+  padding: 60px 4%;
+}
+
+section.sobre .flex {
+  align-items: center;
+  gap: 60px;
+}
+
+.sobre .txt-sobre {
+  color: #050505;
+  margin-bottom: 50px;
+}
+
+.sobre .txt-sobre h2 {
+  font-size: 40px;
+}
+
+.sobre .txt-sobre h2 span {
+  color: #4f5582;
+}
+
+.sobre .txt-sobre p {
+  margin: 10px 0;
+  text-align: justify;
+}
+
+.sobre .txt-sobre .sam-social button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: #4f5582;
+  font-size: 22px;
+  margin: 20px 10px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+
+  /*class*/
+  .flex {
+    flex-direction: column;
+  }
+
+  /*topo*/
+  .menu-desktop,
+  .sam-contato {
+    display: none;
+  }
+}
+</style>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stockify</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link href="../assets/css/homepage.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <script src="../assets/js/general.js"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid p-0 d-flex h-100">
+        <div id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white offcanvas-md offcanvas-start"
+            style="width: 280px;">
+            <a href="homepage.html" class="navbar-brand">
+                <h5>Stockify</h5>
+            </a>
+            <hr>
+            <ul class="mynav nav nav-pills flex-column mb-auto">
+                <li class="nav-item mb-1">
+                    <a href="calendario.html" class="" onclick="btn1()">
+                        Calendário
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="funcionarios.html" class="" onclick="btn2()">
+                        Administração de Funcionários
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="alimentos.html" class="" onclick="btn3()">
+                        Estoque
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="cadastroAlimento.html" class="" onclick="btn4()">
+                        Cadastro de Produtos
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="fornecedor.html" class="" onclick="btn5()">
+                        Fornecedores
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="#" class="" onclick="">
+                        Suporte
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="d-flex">
+                <img src="https://fakeimg.pl/300/" width="50" height="26" class="img-fluid rounded-circle me-2" alt="">
+                <span>
+                    <h6 class="mt-1 mb-0" id="usernameDisplay"></h6>
+                    <small class="" id="emailDisplay"></small>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16" onclick="logout()">
+                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div class="bg-light flex-fill">
+            <div class="p-2 d-md-none d-flex text-white bg-dark">
+                <a href="#" class="text-white" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar">
+                    <i class="fa-solid fa-bars"></i>
+                </a>
+                <span class="ms-3">Stockify</span>
+            </div>
+            <div class="p-4">
+                <div id="content">
+                    <h2>Bem-vindo ao Stockify!</h2>
+                    <p>Por favor, selecione uma das opções abaixo para continuar:</p>
+                    <ul>
+                        <li>
+                            <strong>Calendário:</strong> Gerencie eventos e compromissos. Utilize esta opção para visualizar, criar e gerenciar eventos e compromissos importantes para sua empresa.
+                        </li>
+                        <li>
+                            <strong>Administração de Funcionários:</strong> Acesse informações sobre os funcionários. Aqui você pode gerenciar dados dos funcionários, como informações pessoais, cargos, horários, e mais.
+                        </li>
+                        <li>
+                            <strong>Estoque:</strong> Gerencie o estoque de produtos ou materiais. Esta opção permite o controle e a gestão dos itens em estoque, verificando a disponibilidade e organização dos produtos.
+                        </li>
+                        <li>
+                            <strong>Cadastro de Produtos:</strong> Adicione ou atualize produtos. Utilize esta funcionalidade para cadastrar novos produtos no sistema ou atualizar informações de produtos existentes.
+                        </li>
+                        <li>
+                            <strong>Fornecedores:</strong> Informações sobre os fornecedores. Acesse dados e informações relacionadas aos fornecedores com os quais a empresa mantém relações comerciais.
+                        </li>
+                        <li>
+                            <strong>Suporte:</strong> Entre em contato conosco para obter suporte. Caso necessite de assistência ou suporte técnico, esta opção permite entrar em contato com nossa equipe para obter ajuda.
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<style>
+    
+html,
+body {
+  height: 100%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.mynav {
+  color: #fff;
+}
+
+.mynav li a {
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+  padding: 8px 5px;
+}
+
+.mynav li a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a i {
+  width: 25px;
+  text-align: center;
+}
+
+.notification-badge {
+  background-color: rgba(255, 255, 255, 0.7);
+  float: right;
+  color: #222;
+  font-size: 14px;
+  padding: 0px 8px;
+  border-radius: 2px;
+}
+
+#results{
+  display: inline-flex;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+svg{
+  margin-left: 20px;
+  margin-bottom: 17px;
+}
+
+#content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+#content h2 {
+    font-size: 42px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+#content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+#content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#content ul li {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#content ul li strong {
+    font-weight: bold;
+    color: #007bff;
+}
+
+
+</style>
+
+</html>
