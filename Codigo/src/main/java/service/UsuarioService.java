@@ -10,7 +10,6 @@ import spark.Response;
 public class UsuarioService {
 
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
-    private String form;
 
     public UsuarioService() {
         makeForm();
@@ -21,8 +20,8 @@ public class UsuarioService {
     }
 
     public Object login(Request request, Response response) {
-        String email = "teste@gmail.com";
-        String senha = "teste";
+        String email = "exemplo@email.com";
+        String senha = "senha123";
     
         Usuario usuario = usuarioDAO.autenticarUsuario(email, senha);
     

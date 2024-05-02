@@ -1,107 +1,103 @@
 package model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 public class Produto {
-	private int id;
-	private String descricao;
-	private float preco;
-	private int quantidade;
-	private LocalDateTime dataFabricacao;	
-	private LocalDate dataValidade;
-	
-	public Produto() {
-		id = -1;
-		descricao = "";
-		preco = 0.00F;
-		quantidade = 0;
-		dataFabricacao = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-		dataValidade = LocalDate.now().plusMonths(6); // o default é uma validade de 6 meses.
-	}
+    private int id;
+    private String nome;
+    private String categoria;
+    private int quantidade;
+    private String fornecedor;
+    private String lote;
+    private LocalDate dataValidade;
 
-	public Produto(int id, String descricao, float preco, int quantidade, LocalDateTime fabricacao, LocalDate v) {
-		setId(id);
-		setDescricao(descricao);
-		setPreco(preco);
-		setQuantidade(quantidade);
-		setDataFabricacao(fabricacao);
-		setDataValidade(v);
-	}		
-	
-	public int getID() {
-		return id;
-	}
+    public Produto() {
+        id = -1;
+        nome = "";
+        categoria = "";
+        quantidade = 0;
+        fornecedor = "";
+        lote = "";
+        dataValidade = LocalDate.now().plusMonths(6); // validade padrão de 6 meses
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Produto(String nome, String categoria, int quantidade, String fornecedor, String lote, LocalDate dataValidade) {
+        this.nome = nome;
+        this.categoria = categoria;
+        this.quantidade = quantidade;
+        this.fornecedor = fornecedor;
+        this.lote = lote;
+        this.dataValidade = dataValidade;
+    }
 
-	
-	public String getDescricao() {
-		return descricao;
-	}
+    // Métodos getters e setters
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public float getPreco() {
-		return preco;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setPreco(float preco) {
-		this.preco = preco;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public int getQuantidade() {
-		return quantidade;
-	}
-	
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
-	
-	public LocalDate getDataValidade() {
-		return dataValidade;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public LocalDateTime getDataFabricacao() {
-		return dataFabricacao;
-	}
+    public String getCategoria() {
+        return categoria;
+    }
 
-	public void setDataFabricacao(LocalDateTime dataFabricacao) {
-		// Pega a Data Atual
-		LocalDateTime agora = LocalDateTime.now();
-		// Garante que a data de fabricação não pode ser futura
-		if (agora.compareTo(dataFabricacao) >= 0)
-			this.dataFabricacao = dataFabricacao;
-	}
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 
-	public void setDataValidade(LocalDate dataValidade) {
-		// a data de fabricação deve ser anterior é data de validade.
-		if (getDataFabricacao().isBefore(dataValidade.atStartOfDay()))
-			this.dataValidade = dataValidade;
-	}
+    public int getQuantidade() {
+        return quantidade;
+    }
 
-	public boolean emValidade() {
-		return LocalDateTime.now().isBefore(this.getDataValidade().atTime(23, 59));
-	}
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
 
+    public String getFornecedor() {
+        return fornecedor;
+    }
 
-	/**
-	 * Método sobreposto da classe Object. É executado quando um objeto precisa
-	 * ser exibido na forma de String.
-	 */
-	@Override
-	public String toString() {
-		return "Produto: " + descricao + "   Preço: R$" + preco + "   Quantidade.: " + quantidade + "   Fabricação: "
-				+ dataFabricacao  + "   Data de Validade: " + dataValidade;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		return (this.getID() == ((Produto) obj).getID());
-	}	
+    public void setFornecedor(String fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
+    public String getLote() {
+        return lote;
+    }
+
+    public void setLote(String lote) {
+        this.lote = lote;
+    }
+
+    public LocalDate getDataValidade() {
+        return dataValidade;
+    }
+
+    public void setDataValidade(LocalDate dataValidade) {
+        this.dataValidade = dataValidade;
+    }
+
+    // Outros métodos
+
+    @Override
+    public String toString() {
+        return "Produto: " + nome + "   Categoria: " + categoria + "   Quantidade: " + quantidade +
+                "   Fornecedor: " + fornecedor + "   Lote: " + lote + "   Data de Validade: " + dataValidade;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (this.getId() == ((Produto) obj).getId());
+    }
 }

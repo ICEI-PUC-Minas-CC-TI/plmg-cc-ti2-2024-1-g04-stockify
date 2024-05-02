@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     async function createItem(item) {
-        await fetch('https://jsonserver.samaranegabriel.repl.co/alimentos', {
+        await fetch('/produto/insert', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
