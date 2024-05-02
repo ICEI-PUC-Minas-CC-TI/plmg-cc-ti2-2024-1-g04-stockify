@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Shopify</title>
+    <!-- jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- CSS  -->
+
+    <!-- Js  -->
+    <script src="../assets/js/atendente.js" defer></script>
+    <!-- Google Fonts Link For Icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+</head>
+
+<body>
+    <!-- Cabeçalho da página -->
+    <header>
+        <div class="chat-header">
+            <div class="contact-info">
+                <img src="/img/Iron-Giant-Collectible-Figure-by-Mondo.jpeg" alt="Imagem do Contato">
+                <h1>Atendente Virtual</h1>
+            </div>
+        </div>
+    </header>
+    <!-- Fim do cabeçalho da página -->
+
+    <!-- Menu lateral para (futura) navegação -->
+    <aside>
+    </aside>
+    <!-- Fim do menu lateral  -->
+    <main>
+        <div class="chat-container">
+            <div class="chat" id="chat-box"></div>
+            <div class="input-container">
+                <!-- opções clicáveis -->
+                <div id="options-container"></div>
+                <!-- opções clicáveis final -->
+                <input type="text" id="message-input" placeholder="Digite sua mensagem...">
+                <button onclick="sendMessage()">
+                    <span id="send-btn" class="material-symbols-rounded">send</span>
+                </button>
+            </div>
+        </div>
+
+
+    </main>
+</body>
+
+<style>
+    
+html,
+body {
+  height: 100%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.mynav {
+  color: #fff;
+}
+
+.mynav li a {
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+  padding: 8px 5px;
+}
+
+.mynav li a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a i {
+  width: 25px;
+  text-align: center;
+}
+
+.notification-badge {
+  background-color: rgba(255, 255, 255, 0.7);
+  float: right;
+  color: #222;
+  font-size: 14px;
+  padding: 0px 8px;
+  border-radius: 2px;
+}
+
+#results{
+  display: inline-flex;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+svg{
+  margin-left: 20px;
+  margin-bottom: 17px;
+}
+
+</style>
+
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stockify</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <script src="../assets/js/general.js"></script>
+    <link rel="stylesheet" href="../assets//css/fornecedor.css">
+
+</head>
+
+<body>
+
+    <div class="container-fluid p-0 d-flex h-100">
+        <div id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white offcanvas-md offcanvas-start"
+            style="width: 280px;">
+            <a href="homepage.html" class="navbar-brand">
+                <h5>Stockify</h5>
+            </a>
+            <hr>
+            <ul class="mynav nav nav-pills flex-column mb-auto">
+                <li class="nav-item mb-1">
+                    <a href="calendario.html" class="" onclick="btn1()">
+                        Calendário
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="funcionarios.html" class="" onclick="btn2()">
+                        Administração de Funcionários
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="alimentos.html" class="" onclick="btn3()">
+                        Estoque
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="cadastroAlimento.html" class="" onclick="btn4()">
+                        Cadastro de Produtos
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="fornecedor.html" class="" onclick="btn5()">
+                        Fornecedores
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="#" class="" onclick="">
+                        Suporte
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="d-flex">
+                <img src="https://fakeimg.pl/300/" width="50" height="26" class="img-fluid rounded-circle me-2" alt="">
+                <span>
+                    <h6 class="mt-1 mb-0" id="usernameDisplay"></h6>
+                    <small class="" id="emailDisplay"></small>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16" onclick="logout()">
+                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                      </svg>
+                </span>
+            </div>
+        </div>
+
+        <div class="bg-light flex-fill">
+            <div class="p-2 d-md-none d-flex text-white bg-dark">
+                <a href="#" class="text-white" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar">
+                    <i class="fa-solid fa-bars"></i>
+                </a>
+                <span class="ms-3">Stockify</span>
+            </div>
+            <div class="p-4">
+                <div id="content"> <!--ADICIONAR O CONTEÚDO DO HTML DENTRO DESSA DIV-->
+                    <a href="cadastroFornecedor.html" class="button" id="cadastrarFornecedor">Adicionar Fornecedor</a>
+                    <table id="tableClient" class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Fornecedor</th>
+                                <th>Categoria</th>
+                                <th>Celular</th>
+                                <th>Endereço</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="../assets/js/fornecedor.js"></script>
+
+<style>
+    
+html,
+body {
+  height: 100%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.mynav {
+  color: #fff;
+}
+
+.mynav li a {
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+  padding: 8px 5px;
+}
+
+.mynav li a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a i {
+  width: 25px;
+  text-align: center;
+}
+
+.notification-badge {
+  background-color: rgba(255, 255, 255, 0.7);
+  float: right;
+  color: #222;
+  font-size: 14px;
+  padding: 0px 8px;
+  border-radius: 2px;
+}
+
+#results{
+  display: inline-flex;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+svg{
+  margin-left: 20px;
+  margin-bottom: 17px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+}
+ /*logo*/
+
+
+
+
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 90%;
+    margin: 2% auto;
+    padding: 50px;
+    gap: 20px;
+    box-shadow: 2px 2px 10px black;
+    
+}
+
+/*estilizando o botão de adicionar- editar- excluir*/
+.button {
+    border-style: none;
+    height: 40px;
+    width: max-content;
+    padding: 10px;
+    background-color: #0b0a0c;
+    color: white;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border-radius: 5px;
+}
+
+.button:hover{
+    background-color: #444242;
+}
+
+
+.button.editar {
+    background-color: #ccc;
+    
+}
+
+.button.excluir {
+    background-color: rgb(156, 24, 24);
+}
+
+.tabela {
+    width: 100%;
+    /*usuario nao consegue selecionar e copiar as informações da tabela*/
+    user-select: none;
+    text-align: left;
+
+}
+
+/*records - tabela*/
+/*cabeçalho da tabela*/
+.tabela th {
+    height: 50px;
+    background-color: #ccc;
+    color: black;
+    padding-left: 10px;
+}
+
+/*conteudo da tabela*/
+.tabela td {
+    height: 70px;
+    padding-left: 20px;
+}
+
+.tabela tr:hover {
+    background-color: rgb(203, 203, 203);
+}
+
+
+footer {
+    width: 100;
+    text-align: center;
+    font-weight: 200;
+    font-style: italic;
+    padding: 20px;
+    
+}
+
+@media (max-width: 480px) {
+    .header{
+        position:fixed;
+       
+    }
+    .header-title{
+        font-size: 1.5rem;
+    }
+
+    main {
+        padding: 0;
+        margin: 0 0 0 0;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .button.mobile {
+        color: transparent;
+        font-size: 0;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        position: fixed;
+        top: 90vh;
+        left: 80vw;
+    }
+
+    .button.mobile::before {
+        content: "+";
+        color: black;
+        font-size: 2rem;
+        width: 100%;
+        height: 100%;
+    }
+
+    .tabela {
+        border-spacing: 5px;
+    }
+
+    .tabela thead {
+        display: none;
+    }
+
+    .tabela tr{
+        box-shadow: 0 1px 3px black;
+    }
+
+    .tabela td:not(:first-child){
+        display: flex;
+        justify-content: space-between;
+        padding: 0px ;
+    }
+
+    .tabela td{
+        margin: 10px 0;
+    }
+
+    .tabela tr:hover{
+        background-color: inherit;
+    }
+
+
+}
+
+
+</style>
+
+</html>

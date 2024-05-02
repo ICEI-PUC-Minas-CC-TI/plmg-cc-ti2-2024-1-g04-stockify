@@ -1,0 +1,214 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ffffff;
+  height: 200px;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.interface {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.sam-contato button {
+  padding: 10px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #5f6cc8;
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.sam-contato button:hover {
+  padding: 10px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #949ee5;
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #4f5582;
+}
+
+h2.titulo {
+  color: #050505;
+  font-size: 38px;
+  text-align: center;
+}
+
+h2.titulo span {
+  color: #4f5582;
+}
+
+header>.interface {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header a {
+  color: #808080;
+  text-decoration: none;
+}
+
+header a:hover {
+  color: #050505;
+}
+
+header nav ul {
+  list-style-type: none;
+}
+
+header nav ul li {
+  display: inline-block;
+  padding: 0 40px;
+}
+
+/* Topo do site */
+
+section.topo-do-site {
+  padding: 40px 4%;
+}
+
+section.topo-do-site .flex {
+  align-items: center;
+  justify-content: center;
+  gap: 90px;
+}
+
+.topo-do-site h1 {
+  font-size: 42px;
+  color: #050505;
+  line-height: 40px;
+}
+
+.topo-do-site .txt-topo-site p {
+  color: #050505;
+  margin: 40px 0;
+}
+
+.topo-do-site .txt-topo-site p1 {
+  color: #050505;
+  margin: 40px 0;
+}
+
+.topo-do-site .img-topo-do-site img {
+  position: relative;
+  animation: flutuar 2s ease-in-out infinite alternate;
+}
+
+@keyframes flutuar {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: 30px
+  }
+}
+
+/* especialidades */
+
+section.especialidades {
+  padding: 40px 4%;
+}
+
+section.especialidades .flex {
+  gap: 60px;
+}
+
+.especialidades .especialidades-box {
+  color: #050505;
+  padding: 40px;
+  border-radius: 25px;
+  margin-top: 35px;
+  transition: 0.2s;
+}
+
+.especialidades .especialidades-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px #050505;
+}
+
+.especialidades .especialidades-box i {
+  font-size: 70px;
+  color: #4f5582;
+  ;
+}
+
+.especialidades .especialidades-box p {
+  text-align: start;
+}
+
+.especialidades .especialidades-box h3 {
+  font-size: 25px;
+  margin: 15px 0;
+}
+
+/* sobre */
+
+section.sobre {
+  padding: 60px 4%;
+}
+
+section.sobre .flex {
+  align-items: center;
+  gap: 60px;
+}
+
+.sobre .txt-sobre {
+  color: #050505;
+  margin-bottom: 50px;
+}
+
+.sobre .txt-sobre h2 {
+  font-size: 40px;
+}
+
+.sobre .txt-sobre h2 span {
+  color: #4f5582;
+}
+
+.sobre .txt-sobre p {
+  margin: 10px 0;
+  text-align: justify;
+}
+
+.sobre .txt-sobre .sam-social button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: #4f5582;
+  font-size: 22px;
+  margin: 20px 10px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+
+  /*class*/
+  .flex {
+    flex-direction: column;
+  }
+
+  /*topo*/
+  .menu-desktop,
+  .sam-contato {
+    display: none;
+  }
+}

@@ -1,0 +1,19 @@
+#results{
+    display: flex;
+    margin: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between; /* ou justify-content: flex-start; */
+    gap: 16px;
+    border: none;
+    min-width: 250px;
+}
+
+.card-body{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+}
+
+input{
+    width: 50%;
+    display: block;
+}

@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #c6c7cd;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #61059e;
+    width: 360px;
+    margin: 0 auto; /* Define as margens laterais como automáticas para centralizar */
+    border-radius: 10px 10px 0px 0px;
+
+}
+
+.chat-header h1 {
+    text-align: center;
+    align-items: center;
+    font-size: 24px;
+    margin: 0;
+}
+
+.chat-header .contact-info {
+    display: flex;
+    align-items: center;
+}
+
+.contact-info img {
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.contact-info p {
+    align-items: center;
+    font-size: 16px;
+    margin: 0;
+}
+
+.chat-container {
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0px 0px 0px 0px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.chat {
+    padding: 0px 50px;
+    height: 400px;
+    overflow-y: scroll;
+    max-height: 400px;
+
+}
+
+/* ------------------------------ SCRIPT ------------------------------ */
+.message {
+    display: flex;
+    margin: 10px;
+    max-width: 70%;
+}
+
+.received {
+    justify-content: flex-start;
+}
+
+.sent {
+    justify-content: flex-end;
+}
+
+.message-text {
+    padding: 10px;
+    border-radius: 10px 10px 0 10px;
+    color: #ffffff;
+    background-color: #61059e;
+    font-size: 16px;
+    word-wrap: break-word;
+    max-width: 70%;
+}
+
+.received .message-text {
+    color: #000000;
+    background-color: #eaeaea;
+    border-radius: 10px 10px 10px 0px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    }
+
+button {
+    float: right;
+    padding: 5px 20px;
+    background-color: #61059e;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+input[type="text"]::placeholder {
+    color: #ccc;
+}
+
+.clickable {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #ffffff;
+  }
+  
