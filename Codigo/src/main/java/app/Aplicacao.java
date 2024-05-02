@@ -15,6 +15,7 @@ public class Aplicacao {
         staticFiles.location("/public");
 
         // Rotas para lidar com operações de produtos
+        get("/produto/insert", (request, response) -> produtoService.insert(request, response));
         post("/produto/insert", (request, response) -> produtoService.insert(request, response));
         get("/produto/:id", (request, response) -> produtoService.get(request, response));
         get("/produto/list/:orderby", (request, response) -> produtoService.getAll(request, response));
