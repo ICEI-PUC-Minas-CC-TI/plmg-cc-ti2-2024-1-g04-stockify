@@ -1,32 +1,39 @@
-//Função cadastra funcionário
-
 function cadastraFuncionario(event) {
   event.preventDefault();
-  const formData = {
-    nome: document.getElementById('nome').value,
-    email: document.getElementById('email').value,
-    senha: document.getElementById('senha').value,
-    idade: parseInt(document.getElementById('idade').value, 10),
-    cpf: document.getElementById('cpf').value,
-    salario: parseFloat(document.getElementById('salario').value)
-  };
-
-  fetch('/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  })
-    .then(response => response.json())
-    alert("FUNCIONARIO CADASTRADO COM SUCESSO")
-    .then(data => {
-      console.log('Sucesso:', data);
-      alert('Funcionário cadastrado com sucesso!');
+  
+  const usernameElement = document.getElementById('username');
+  const emailElement = document.getElementById('email');
+  const passwordElement = document.getElementById('password');
+  
+  if (usernameElement && emailElement && passwordElement) {
+    const formData = {
+      username: usernameElement.value,
+      email: emailElement.value,
+      password: passwordElement.value,
+    };
+    
+    console.log(formData);
+    
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
     })
-    .catch((error) => {
-      console.error('Erro:', error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log('Sucesso:', data);
+        console.log('Funcionário cadastrado com sucesso!');
+      })
+      .catch((error) => {
+        console.error('Erro:', error);
+        console.log('Ocorreu um erro ao cadastrar o funcionário. Por favor, tente novamente.');
+      });
+  } else {
+    console.error('Elementos do formulário não encontrados.');
+    alert('Ocorreu um erro ao acessar os elementos do formulário. Por favor, tente novamente.');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {

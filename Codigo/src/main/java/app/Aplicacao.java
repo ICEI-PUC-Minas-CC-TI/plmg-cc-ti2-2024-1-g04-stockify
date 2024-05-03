@@ -31,7 +31,7 @@ public class Aplicacao {
 
         // Rota para lidar com o login do usuário
         get("/login", (request, response) -> usuarioService.login(request, response));
-        post("/login", (request, response) -> usuarioService.login(request, response));
+        post("/login", (request, response) -> usuarioService.criarUsuario(request, response));
 
     }
 }

@@ -11,20 +11,76 @@ public class UsuarioService {
 
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    public UsuarioService() {
-        makeForm();
+    // Método para criar um usuário
+    public Object criarUsuario(Request request, Response response) {
+        Gson gson = new Gson();
+        Usuario usuario = gson.fromJson(request.body(), Usuario.class);
+        
+        // Imprimir os valores dos parâmetros email e password
+        System.out.println("Email recebido: " + usuario.getEmail());
+        System.out.println("Senha recebida: " + usuario.getSenha());
+    
+        // Verificar se o usuário já existe
+        Usuario usuarioExistente = usuarioDAO.buscarUsuarioPorEmail(usuario.getEmail());
+        if (usuarioExistente != null) {
+            response.status(400); // Bad Request
+            return "Já existe um usuário cadastrado com este email.";
+        }
+    
+        usuarioDAO.salvarUsuario(usuario);
+        response.status(201); // Created
+        return gson.toJson(usuario);
+    }
+    
+    // Método para recuperar um usuário por ID
+    public Object buscarUsuario(Request request, Response response) {
+        int id = Integer.parseInt(request.params(":id"));
+        Usuario usuario = usuarioDAO.buscarUsuarioPorId(id);
+        if (usuario != null) {
+            return usuario;
+        } else {
+            response.status(404); // Not Found
+            return "Usuário não encontrado.";
+        }
     }
 
-    public void makeForm() {
+    // Método para atualizar um usuário
+    public Object atualizarUsuario(Request request, Response response) {
+        int id = Integer.parseInt(request.params(":id"));
+        Gson gson = new Gson();
+        Usuario usuarioAtualizado = gson.fromJson(request.body(), Usuario.class);
+        
+        Usuario usuarioExistente = usuarioDAO.buscarUsuarioPorId(id);
+        if (usuarioExistente != null) {
+            usuarioAtualizado.setId(id);
+            usuarioDAO.atualizarUsuario(usuarioAtualizado);
+            return usuarioAtualizado;
+        } else {
+            response.status(404); // Not Found
+            return "Usuário não encontrado.";
+        }
+    }
 
+    // Método para excluir um usuário
+    public Object excluirUsuario(Request request, Response response) {
+        int id = Integer.parseInt(request.params(":id"));
+        Usuario usuarioExistente = usuarioDAO.buscarUsuarioPorId(id);
+        if (usuarioExistente != null) {
+            usuarioDAO.excluirUsuario(id);
+            response.status(200); // OK
+            return "Usuário excluído com sucesso.";
+        } else {
+            response.status(404); // Not Found
+            return "Usuário não encontrado.";
+        }
     }
 
     public Object login(Request request, Response response) {
-        String email = "exemplo@email.com";
-        String senha = "senha123";
-    
+        String email = "teste@gmail.com";
+        String senha = "teste";
+
         Usuario usuario = usuarioDAO.autenticarUsuario(email, senha);
-    
+
         if (usuario != null) {
             // Se o usuário for autenticado com sucesso, crie um objeto JSON com as informações do usuário
             Gson gson = new Gson();
