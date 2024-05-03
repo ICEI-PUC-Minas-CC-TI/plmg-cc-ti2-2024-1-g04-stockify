@@ -24,22 +24,22 @@ public class ProdutoDAO extends DAO {
     public List<Produto> getAll() {
         List<Produto> produtos = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM produtos";
+
+            String sql = "SELECT * FROM produto";
             PreparedStatement stmt = conexao.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
             // Itera sobre o resultado e adiciona os produtos à lista
             while (rs.next()) {
-                int id = rs.getInt("id");
                 String nome = rs.getString("nome");
                 String categoria = rs.getString("categoria");
                 int quantidade = rs.getInt("quantidade");
                 String fornecedor = rs.getString("fornecedor");
                 String lote = rs.getString("lote");
-                Date dataValidade = rs.getDate("data_validade");
+                String dataValidade = rs.getString("datavalidade");
 
                 // Cria um objeto Produto com os dados do banco de dados
-                Produto produto = new Produto(nome, categoria, quantidade, fornecedor, lote, dataValidade.toLocalDate());
+                Produto produto = new Produto(nome, categoria, quantidade, fornecedor, lote, dataValidade);
                 produtos.add(produto);
             }
             stmt.close();
@@ -52,15 +52,16 @@ public class ProdutoDAO extends DAO {
     public boolean insert(Produto produto) {
         boolean status = false;
         try {
-            String sql = "INSERT INTO produtos (nome, categoria, quantidade, fornecedor, lote, data_validade) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO produto (nome, categoria, quantidade, fornecedor, lote, datavalidade) VALUES (?, ?, ?, ?, ?, ?)"; // "INSERT INTO produtos (nome, categoria, quantidade, fornecedor, lote, datavalidade) VALUES ('gabriel', 'teste', 123, 'givanildo', 'teste', '2024-05-03')";
             PreparedStatement st = conexao.prepareStatement(sql);
+
             st.setString(1, produto.getNome());
             st.setString(2, produto.getCategoria());
             st.setInt(3, produto.getQuantidade());
             st.setString(4, produto.getFornecedor());
             st.setString(5, produto.getLote());
-            st.setDate(6, Date.valueOf(produto.getDataValidade()));
+            st.setDate(6, Date.valueOf(produto.getDatavalidade()));
+
             st.executeUpdate();
             st.close();
             status = true;
@@ -83,10 +84,10 @@ public class ProdutoDAO extends DAO {
 				int quantidade = rs.getInt("quantidade");
 				String fornecedor = rs.getString("fornecedor");
 				String lote = rs.getString("lote");
-				Date dataValidade = rs.getDate("data_validade");
+				String dataValidade = rs.getString("data_validade");
 	
 				// Cria um objeto Produto com os dados do banco de dados
-				produto = new Produto(nome, categoria, quantidade, fornecedor, lote, dataValidade.toLocalDate());
+				produto = new Produto(nome, categoria, quantidade, fornecedor, lote, dataValidade);
 			}
 			st.close();
 		} catch (Exception e) {
@@ -124,7 +125,7 @@ public class ProdutoDAO extends DAO {
 			while(rs.next()) {                    
 				Produto p = new Produto(rs.getString("nome"), rs.getString("categoria"), 
 										rs.getInt("quantidade"), rs.getString("fornecedor"), rs.getString("lote"),
-										rs.getDate("data_validade").toLocalDate());
+										rs.getString("datavalidade"));
 				produtos.add(p);
 			}
 			st.close();
@@ -146,7 +147,7 @@ public class ProdutoDAO extends DAO {
             st.setInt(3, produto.getQuantidade());
             st.setString(4, produto.getFornecedor());
             st.setString(5, produto.getLote());
-            st.setDate(6, Date.valueOf(produto.getDataValidade()));
+            st.setDate(6, Date.valueOf(produto.getDatavalidade()));
             st.setInt(7, produto.getId());
 			st.executeUpdate();
 			st.close();

@@ -18,7 +18,8 @@ public class UsuarioService {
         
         // Imprimir os valores dos parâmetros email e password
         System.out.println("Email recebido: " + usuario.getEmail());
-        System.out.println("Senha recebida: " + usuario.getSenha());
+        System.out.println("Senha recebida: " + usuario.getSenha()); // olhar senha
+        System.out.println("Nome recebido: " + usuario.getusername()); // olhar senha
     
         // Verificar se o usuário já existe
         Usuario usuarioExistente = usuarioDAO.buscarUsuarioPorEmail(usuario.getEmail());
@@ -75,23 +76,23 @@ public class UsuarioService {
         }
     }
 
-    public Object login(Request request, Response response) {
-        String email = "teste@gmail.com";
-        String senha = "teste";
+    public boolean login(Request request, Response response) {
 
-        Usuario usuario = usuarioDAO.autenticarUsuario(email, senha);
+        Gson gson = new Gson();
+        Usuario usuario = gson.fromJson(request.body(), Usuario.class);
+        Usuario auxiliar = usuarioDAO.autenticarUsuario(usuario.getEmail(), usuario.getSenha());
 
-        if (usuario != null) {
+        if (auxiliar != null) {
             // Se o usuário for autenticado com sucesso, crie um objeto JSON com as informações do usuário
-            Gson gson = new Gson();
-            String jsonUsuario = gson.toJson(usuario);
+            // Gson gson = new Gson();
+            // String jsonUsuario = gson.toJson(auxiliar);
             response.status(200); // OK
             response.type("application/json");
-            return jsonUsuario;
+            return true;
         } else {
             // Se as credenciais estiverem incorretas, retorne uma mensagem de erro
             response.status(401); // Unauthorized
-            return "Email ou senha incorretos. Por favor, tente novamente.";
+            return false;
         }
     }
 }

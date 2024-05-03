@@ -1,7 +1,5 @@
 package model;
 
-import java.time.LocalDate;
-
 public class Produto {
     private int id;
     private String nome;
@@ -9,25 +7,25 @@ public class Produto {
     private int quantidade;
     private String fornecedor;
     private String lote;
-    private LocalDate dataValidade;
+    private String datavalidade;
 
     public Produto() {
-        id = -1;
+        id = 0;
         nome = "";
         categoria = "";
         quantidade = 0;
         fornecedor = "";
         lote = "";
-        dataValidade = LocalDate.now().plusMonths(6); // validade padrão de 6 meses
+        datavalidade = ""; // validade padrão de 6 meses
     }
 
-    public Produto(String nome, String categoria, int quantidade, String fornecedor, String lote, LocalDate dataValidade) {
+    public Produto(String nome, String categoria, int quantidade, String fornecedor, String lote, String datavalidade) {
         this.nome = nome;
         this.categoria = categoria;
         this.quantidade = quantidade;
         this.fornecedor = fornecedor;
         this.lote = lote;
-        this.dataValidade = dataValidade;
+        this.datavalidade = datavalidade;
     }
 
     // Métodos getters e setters
@@ -80,12 +78,12 @@ public class Produto {
         this.lote = lote;
     }
 
-    public LocalDate getDataValidade() {
-        return dataValidade;
+    public String getDatavalidade() {
+        return datavalidade;
     }
 
-    public void setDataValidade(LocalDate dataValidade) {
-        this.dataValidade = dataValidade;
+    public void setDatavalidade(String datavalidade) {
+        this.datavalidade = datavalidade;
     }
 
     // Outros métodos
@@ -93,7 +91,7 @@ public class Produto {
     @Override
     public String toString() {
         return "Produto: " + nome + "   Categoria: " + categoria + "   Quantidade: " + quantidade +
-                "   Fornecedor: " + fornecedor + "   Lote: " + lote + "   Data de Validade: " + dataValidade;
+                "   Fornecedor: " + fornecedor + "   Lote: " + lote + "   Data de Validade: " + datavalidade;
     }
 
     @Override

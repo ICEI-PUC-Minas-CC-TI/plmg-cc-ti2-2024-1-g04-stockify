@@ -9,12 +9,12 @@ function cadastraFuncionario(event) {
     const formData = {
       username: usernameElement.value,
       email: emailElement.value,
-      password: passwordElement.value,
+      senha: passwordElement.value,
     };
     
     console.log(formData);
-    
-    fetch('/login', {
+
+    fetch('/login/insere', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

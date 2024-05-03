@@ -27,7 +27,7 @@ public class UsuarioDAO extends DAO {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("email"), rs.getString("password"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
             }
             rs.close();
             st.close();
@@ -47,7 +47,7 @@ public class UsuarioDAO extends DAO {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("email"), rs.getString("password"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
             }
             rs.close();
             st.close();
@@ -60,10 +60,11 @@ public class UsuarioDAO extends DAO {
     // Método para salvar um usuário
     public void salvarUsuario(Usuario usuario) {
         try {
-            String sql = "INSERT INTO users (email, senha) VALUES (?, ?)";
+            String sql = "INSERT INTO users (username, email, senha) VALUES (?, ?, ?)";
             PreparedStatement st = conexao.prepareStatement(sql);
-            st.setString(1, usuario.getEmail());
-            st.setString(2, usuario.getSenha());
+            st.setString(1, usuario.getusername());
+            st.setString(2, usuario.getEmail());
+            st.setString(3, usuario.getSenha());
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
@@ -102,13 +103,13 @@ public class UsuarioDAO extends DAO {
 	public Usuario autenticarUsuario(String email, String senha) {
         Usuario usuario = null;
         try {
-            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            String sql = "SELECT * FROM users WHERE email = ? AND senha = ?";
             PreparedStatement st = conexao.prepareStatement(sql);
             st.setString(1, email);
             st.setString(2, senha);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("email"), rs.getString("password"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
             }
             rs.close();
             st.close();
