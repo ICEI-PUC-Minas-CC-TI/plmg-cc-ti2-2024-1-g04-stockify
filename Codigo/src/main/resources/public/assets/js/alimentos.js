@@ -1,21 +1,22 @@
 const teste = handleSearch()
 
-function busca(){
-    console.log(teste);
-    // faz um for buscando o valor do nome
-    
-    `<div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">${aux.nome}</h3>
-                    <p class="card-text">Categoria: ${aux.categoria}</p>
-                    <p class="card-text">Quantidade: ${aux.quantidade}</p>
-                    <p class="card-text">Fornecedor: ${aux.fornecedor}</p>
-                    <p class="card-text">Lote: ${aux.lote}</p>
-                    <p class="card-text">Data: ${aux.datavencimento}</p>
-                </div>
-            </div>
-            `
-    //
+async function busca() {
+    try {
+        const termoBusca = document.getElementById('searchBar').value.trim().toLowerCase();
+
+        // Faz a busca dos alimentos
+        const alimentos = await fetchAlimentos();
+
+        // Filtra os alimentos com base no termo de busca
+        const resultados = alimentos.filter(alimento =>
+            alimento.nome.toLowerCase().includes(termoBusca)
+        );
+
+        // Exibe os resultados na interface
+        displayResults(resultados);
+    } catch (error) {
+        console.error("Ocorreu um erro na busca:", error);
+    }
 }
 
 async function handleSearch() {
