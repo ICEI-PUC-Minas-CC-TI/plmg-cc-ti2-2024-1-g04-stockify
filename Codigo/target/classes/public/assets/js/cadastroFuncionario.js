@@ -24,7 +24,7 @@ function cadastraFuncionario(event) {
       .then(response => response.json())
       .then(data => {
         console.log('Sucesso:', data);
-        console.log('Funcionário cadastrado com sucesso!');
+        alert('Funcionário cadastrado com sucesso!');
       })
       .catch((error) => {
         console.error('Erro:', error);

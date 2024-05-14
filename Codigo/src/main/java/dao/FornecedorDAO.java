@@ -11,6 +11,15 @@ import model.Fornecedor;
 public class FornecedorDAO extends DAO {
     private Connection conexao;
 
+    public FornecedorDAO() {
+        super();
+        conectar();
+    }
+
+    public void finalize() {
+        close();
+    }
+
     public FornecedorDAO(Connection conexao) {
         this.conexao = conexao;
     }

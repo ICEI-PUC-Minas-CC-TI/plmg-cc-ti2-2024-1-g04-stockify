@@ -3,11 +3,13 @@ package app;
 import static spark.Spark.*;
 import service.ProdutoService;
 import service.UsuarioService;
+import service.FornecedorService;
 
 public class Aplicacao {
     
     private static ProdutoService produtoService = new ProdutoService();
     private static UsuarioService usuarioService = new UsuarioService(); 
+    private static FornecedorService fornecedorService = new FornecedorService();
 
     public static void main(String[] args) {
         port(6789);
@@ -43,7 +45,12 @@ public class Aplicacao {
         // Rotas para lidar com os produtos
 
         post("/produto/insere", (request, response) -> produtoService.insert(request, response));
-        get("/produto/getAll", (request,response) -> produtoService.getAll(request,response));
+        get("/produto/getAll", (request,response) -> produtoService.getAll(request, response));
+
+        // Rotas fornecedores
+
+        post("/fornecedor/insere", (request, response) -> fornecedorService.inserirFornecedor(request, response)); 
+        get("/fornecedor/getAll", (request, response) -> fornecedorService.buscarTodosFornecedores());
 
         
     }

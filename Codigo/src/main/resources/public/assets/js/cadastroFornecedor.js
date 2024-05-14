@@ -9,7 +9,7 @@ function cadastraFornecedor(event) {
       endereco: document.getElementById('endereco').value
     };
   
-    fetch('https://jsonserver.samaranegabriel.repl.co/fornecedores', {
+    fetch('/fornecedor/insere', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
