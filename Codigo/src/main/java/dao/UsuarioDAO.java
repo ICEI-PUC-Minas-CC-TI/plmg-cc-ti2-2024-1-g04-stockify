@@ -3,9 +3,6 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import model.Usuario;
 
 public class UsuarioDAO extends DAO {
@@ -27,7 +24,7 @@ public class UsuarioDAO extends DAO {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
             }
             rs.close();
             st.close();
@@ -36,7 +33,6 @@ public class UsuarioDAO extends DAO {
         }
         return usuario;
     }
-
 
     // Método para buscar um usuário por email
     public Usuario buscarUsuarioPorEmail(String email) {
@@ -47,7 +43,7 @@ public class UsuarioDAO extends DAO {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
             }
             rs.close();
             st.close();
@@ -75,7 +71,7 @@ public class UsuarioDAO extends DAO {
     // Método para atualizar um usuário
     public void atualizarUsuario(Usuario usuario) {
         try {
-            String sql = "UPDATE users SET email = ?, password = ? WHERE id = ?";
+            String sql = "UPDATE users SET email = ?, senha = ? WHERE id = ?";
             PreparedStatement st = conexao.prepareStatement(sql);
             st.setString(1, usuario.getEmail());
             st.setString(2, usuario.getSenha());
@@ -100,13 +96,13 @@ public class UsuarioDAO extends DAO {
         }
     }
 
-	public Usuario autenticarUsuario(String email, String senha) {
+    // Método para autenticar um usuário
+    public Usuario autenticarUsuario(String email) {
         Usuario usuario = null;
         try {
-            String sql = "SELECT * FROM users WHERE email = ? AND senha = ?";
+            String sql = "SELECT * FROM users WHERE email = ?";
             PreparedStatement st = conexao.prepareStatement(sql);
             st.setString(1, email);
-            st.setString(2, senha);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
@@ -118,5 +114,4 @@ public class UsuarioDAO extends DAO {
         }
         return usuario;
     }
-    
 }

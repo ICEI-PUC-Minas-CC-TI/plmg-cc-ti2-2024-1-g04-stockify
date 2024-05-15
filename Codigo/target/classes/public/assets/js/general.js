@@ -8,10 +8,10 @@ function login() {
         senha: senha
     };
 
-    console.log(credenciais)
+    console.log(credenciais);
 
     // Enviar as credenciais para o endpoint de login no seu backend
-    fetch('/login/procura', {
+    fetch('http://localhost:6789/login/procura', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -27,15 +27,12 @@ function login() {
     })
     .then(data => {
         // Se o login for bem-sucedido, armazenar token e outras informações relevantes
-        // localStorage.setItem('token', data.token);
-        // localStorage.setItem('usuario', JSON.stringify(data.usuario));
-        if(data){
+        if (data) {
             alert('Login bem-sucedido!');
             window.location.href = 'homepage.html';
         } else {
             console.log("Deu algum erro");
         }
-        // Redirecionar para a página inicial ou outra página apropriada
     })
     .catch(error => {
         // Se ocorrer um erro durante o login

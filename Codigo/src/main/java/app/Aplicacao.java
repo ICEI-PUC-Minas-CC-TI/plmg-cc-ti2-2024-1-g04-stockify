@@ -43,14 +43,12 @@ public class Aplicacao {
 
 
         // Rotas para lidar com os produtos
-
         post("/produto/insere", (request, response) -> produtoService.insert(request, response));
         get("/produto/getAll", (request,response) -> produtoService.getAll(request, response));
 
         // Rotas fornecedores
-
         post("/fornecedor/insere", (request, response) -> fornecedorService.inserirFornecedor(request, response)); 
-        get("/fornecedor/getAll", (request, response) -> fornecedorService.buscarTodosFornecedores());
+        get("/fornecedor/getAll", (request, response) -> fornecedorService.buscarTodosFornecedores(request, response));
 
         
     }

@@ -9,7 +9,6 @@ import java.util.List;
 import model.Fornecedor;
 
 public class FornecedorDAO extends DAO {
-    private Connection conexao;
 
     public FornecedorDAO() {
         super();
@@ -27,6 +26,9 @@ public class FornecedorDAO extends DAO {
     // Método para inserir um novo fornecedor no banco de dados
     public boolean inserir(Fornecedor fornecedor) {
         try {
+            if (conexao == null) {
+                throw new SQLException("Objeto de conexão não foi inicializado corretamente.");
+            }
             String sql = "INSERT INTO fornecedor (nome, endereco, celular, categoria) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = conexao.prepareStatement(sql);
             stmt.setString(1, fornecedor.getNome());
