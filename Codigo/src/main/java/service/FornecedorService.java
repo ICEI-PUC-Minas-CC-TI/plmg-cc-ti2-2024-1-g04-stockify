@@ -1,29 +1,36 @@
 package service;
 
-import java.util.List;
 import dao.FornecedorDAO;
 import model.Fornecedor;
 import spark.Request;
 import spark.Response;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 public class FornecedorService {
     private FornecedorDAO fornecedorDAO;
 
     public FornecedorService() {
-        this.fornecedorDAO = new FornecedorDAO(); // Inicializando o fornecedorDAO no construtor padrão
+        this.fornecedorDAO = new FornecedorDAO();
     }
 
     public FornecedorService(FornecedorDAO fornecedorDAO) {
-        this.fornecedorDAO = fornecedorDAO; // Inicializando o fornecedorDAO com o parâmetro do construtor
+        this.fornecedorDAO = fornecedorDAO;
     }
 
-    // Método para inserir um novo fornecedor
+    public String getById(Request request, Response response) {
+        String idParam = request.params(":id");
+        int id = Integer.parseInt(idParam);
+        Fornecedor fornecedor = buscarFornecedorPorId(id);
+        Gson gson = new Gson();
+        return gson.toJson(fornecedor);
+    }
+
     public boolean inserirFornecedor(Request request, Response response) {
         Gson gson = new Gson();
         Fornecedor fornecedor = gson.fromJson(request.body(), Fornecedor.class);
         try {
-            // Utilizando o fornecedorDAO inicializado no construtor
             return fornecedorDAO.inserir(fornecedor);
         } catch (Exception e) {
             System.out.println("Erro ao inserir fornecedor no serviço: " + e.getMessage());
@@ -32,23 +39,28 @@ public class FornecedorService {
         }
     }
 
-    // Método para buscar um fornecedor pelo ID
-    public Fornecedor buscarFornecedorPorId(int id) {
-        return fornecedorDAO.buscarPorId(id);
+    public String getAll(Request request, Response response) {
+        List<Fornecedor> fornecedores = buscarTodosFornecedores();
+        Gson gson = new Gson();
+        return gson.toJson(fornecedores);
     }
 
-    // Método para buscar todos os fornecedores
-    public List<Fornecedor> buscarTodosFornecedores(Request request, Response response) {
-        return fornecedorDAO.buscarTodos();
-    }
-
-    // Método para atualizar um fornecedor
-    public boolean atualizarFornecedor(Fornecedor fornecedor) {
+    public boolean atualizarFornecedor(Request request, Response response) {
+        Gson gson = new Gson();
+        Fornecedor fornecedor = gson.fromJson(request.body(), Fornecedor.class);
         return fornecedorDAO.atualizar(fornecedor);
     }
 
-    // Método para excluir um fornecedor
-    public boolean excluirFornecedor(int id) {
+    public boolean excluirFornecedor(Request request, Response response) {
+        int id = Integer.parseInt(request.params(":id"));
         return fornecedorDAO.excluir(id);
+    }
+
+    private Fornecedor buscarFornecedorPorId(int id) {
+        return fornecedorDAO.buscarPorId(id);
+    }
+
+    private List<Fornecedor> buscarTodosFornecedores() {
+        return fornecedorDAO.buscarTodos();
     }
 }

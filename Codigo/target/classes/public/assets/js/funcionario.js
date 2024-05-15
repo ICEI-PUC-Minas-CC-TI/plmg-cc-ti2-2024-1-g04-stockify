@@ -10,103 +10,54 @@ function isAdmin() {
 function searchEmployee() {
   console.log("clicked");
   const searchValue = document.getElementById('searchInput').value;
-  const url = searchValue ? `https://jsonserver.samaranegabriel.repl.co/funcionarios?nome_like=${searchValue}` : 'https://jsonserver.samaranegabriel.repl.co/funcionarios';
+  const url = searchValue ? `https://seu-backend.com/usuarios?nome_like=${searchValue}` : 'https://seu-backend.com/usuarios';
 
   fetch(url)
     .then(response => response.json())
-    .then(employees => {
+    .then(usuarios => {
       const container = document.getElementById('employeeCardContainer');
       container.innerHTML = ''; // Limpa os resultados anteriores
 
-      if (employees.length === 0) {
-        // Se nenhum funcionário for encontrado, exiba a mensagem.
-        container.innerHTML = '<p>FUNCIONÁRIO NÃO ENCONTRADO</p>';
+      if (usuarios.length === 0) {
+        // Se nenhum usuário for encontrado, exiba a mensagem.
+        container.innerHTML = '<p>USUÁRIO NÃO ENCONTRADO</p>';
       } else {
-        employees.forEach(employee => {
+        usuarios.forEach(usuario => {
           const card = document.createElement('div');
           card.classList.add('employeeCard');
           card.innerHTML = `
-            <h2>${employee.nome}</h2>
-            <p>ID: ${employee.id}</p>
-            <p>Email: ${employee.email}</p>
-            <p>Senha: ${employee.senha}</p>
-            <p>CPF: ${employee.cpf}</p>
-            <p>Salario: ${employee.salario}</p>
-            <button onclick="deleteFuncionario(${employee.id})">Deletar</button>
+            <header>
+              <h2>${usuario.nome}</h2>
+            </header>
+            <p>ID: ${usuario.id}</p>
+            <p>Email: ${usuario.email}</p>
+            <p>CPF: ${usuario.cpf}</p>
+            <p>Salário: ${usuario.salario}</p>
+            <!-- Adicione mais campos conforme necessário -->
+            <button onclick="deleteUsuario(${usuario.id})">Deletar</button>
           `;
           container.appendChild(card);
         });
       }
     })
-    .catch(error => console.error('Erro ao buscar funcionários:', error));
+    .catch(error => console.error('Erro ao buscar usuários:', error));
 }
 
-
-function showAll() {
-  fetch('https://jsonserver.samaranegabriel.repl.co/funcionarios')
-    .then(response => response.json())
-    .then(employees => {
-      const container = document.getElementById('employeeCardContainer');
-      container.innerHTML = ''; // Limpa os resultados anteriores
-      employees.forEach(employee => {
-        // Usar um elemento 'article' para cada card
-        const card = document.createElement('article');
-        card.classList.add('employeeCard');
-        card.innerHTML = `
-                  <header>
-                    <h2>${employee.nome}</h2>
-                  </header>
-                  <p>ID: ${employee.id}</p>
-                  <p>Email: ${employee.email}</p>
-                  <p>Senha: ${employee.senha}</p>
-                  <p>CPF: ${employee.cpf}</p>
-                  <p>Salario: ${employee.salario}</p>
-                  <!-- Adicione mais campos conforme necessário -->
-                  <button onclick="deleteFuncionario(${employee.id})">Deletar</button>
-              `;
-        container.appendChild(card);
-      });
-    })
-    .catch(error => console.error('Erro ao buscar funcionários:', error));
-}
-
-function deleteFuncionario(id) {
+function deleteUsuario(id) {
   if (isAdmin()) {
-    fetch(`https://jsonserver.samaranegabriel.repl.co/funcionarios/${id}`, {
+    fetch(`https://seu-backend.com/usuarios/${id}`, {
       method: 'DELETE'
     })
       .then(response => {
         if (response.ok) {
-          alert('Funcionário deletado com sucesso!');
-          window.location.reload(); // Atualiza a página para mostrar os novos funcionários
+          alert('Usuário deletado com sucesso!');
+          window.location.reload(); // Atualiza a página para mostrar os novos usuários
         } else {
-          alert('Erro ao deletar funcionário!');
+          alert('Erro ao deletar usuário!');
         }
       })
   }
   else {
-    alert("SOMENTE ADMINISTRADORES PODEM DELETAR FUNCIONÁRIOS");
+    alert("SOMENTE ADMINISTRADORES PODEM DELETAR USUÁRIOS");
   }
-
-   
-}
-
-function updateFuncionario(id) {
-  if (isAdmin()) {
-    fetch(`https://jsonserver.samaranegabriel.repl.co/funcionarios/${id}`, {
-      method: 'PUT'
-    })
-      .then(response => {
-        if (response.ok) {
-          alert('Funcionário deletado com sucesso!');
-          window.location.reload(); // Atualiza a página para mostrar os novos funcionários
-        } else {
-          alert('Erro ao deletar funcionário!');
-        }
-      })
-  }
-  else {
-    alert("SOMENTE ADMINISTRADORES PODEM DELETAR FUNCIONÁRIOS");
-  }
-
 }

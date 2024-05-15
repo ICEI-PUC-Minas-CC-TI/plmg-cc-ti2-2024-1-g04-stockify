@@ -5,6 +5,9 @@ import dao.UsuarioDAO;
 import model.Usuario;
 import spark.Request;
 import spark.Response;
+
+import java.util.List;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UsuarioService {
@@ -101,6 +104,16 @@ public class UsuarioService {
             System.out.println("Erro durante o login: " + e.getMessage());
             response.status(500); // Internal Server Error
             return false;
+        }
+    }
+
+    public Object getAllUsuarios(Request request, Response response) {
+        List<Usuario> usuarios = usuarioDAO.getAllUsuarios();
+        if (!usuarios.isEmpty()) {
+            return usuarios;
+        } else {
+            response.status(404); // Not Found
+            return "Nenhum usuário encontrado.";
         }
     }
 }

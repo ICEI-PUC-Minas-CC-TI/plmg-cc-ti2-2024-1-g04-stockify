@@ -40,7 +40,7 @@ public class Aplicacao {
         // Rota para lidar com o login do usuário
         put("/login/procura", (request, response) -> usuarioService.login(request, response));
         post("/login/insere", (request, response) -> usuarioService.criarUsuario(request, response));
-
+        get("/funcionarios/usuarios", (request, response) -> usuarioService.getAllUsuarios(request, response));
 
         // Rotas para lidar com os produtos
         post("/produto/insere", (request, response) -> produtoService.insert(request, response));
@@ -48,8 +48,9 @@ public class Aplicacao {
 
         // Rotas fornecedores
         post("/fornecedor/insere", (request, response) -> fornecedorService.inserirFornecedor(request, response)); 
-        get("/fornecedor/getAll", (request, response) -> fornecedorService.buscarTodosFornecedores(request, response));
-
-        
+        get("/fornecedor/getAll", (request, response) -> fornecedorService.getAll(request, response));
+        get("/fornecedor/:id", (request, response) -> fornecedorService.getById(request, response));
+        put("/fornecedor/atualizar/:id", (request, response) -> fornecedorService.atualizarFornecedor(request, response));
+        delete("/fornecedor/excluir/:id", (request, response) -> fornecedorService.excluirFornecedor(request, response));        
     }
 }

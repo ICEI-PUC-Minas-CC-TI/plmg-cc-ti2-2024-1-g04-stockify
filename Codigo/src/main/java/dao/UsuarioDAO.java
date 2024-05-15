@@ -3,6 +3,9 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Usuario;
 
 public class UsuarioDAO extends DAO {
@@ -113,5 +116,23 @@ public class UsuarioDAO extends DAO {
             throw new RuntimeException("Erro ao autenticar usuário", e);
         }
         return usuario;
+    }
+
+    public List<Usuario> getAllUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM users";
+            PreparedStatement st = conexao.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
+                usuarios.add(usuario);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao obter todos os usuários", e);
+        }
+        return usuarios;
     }
 }

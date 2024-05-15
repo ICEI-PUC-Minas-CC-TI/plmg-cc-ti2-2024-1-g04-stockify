@@ -25,6 +25,8 @@ function cadastraFuncionario(event) {
       .then(data => {
         console.log('Sucesso:', data);
         alert('Funcionário cadastrado com sucesso!');
+        // Redireciona para a página funcionario.html após o cadastro
+        window.location.href = 'funcionario.html';
       })
       .catch((error) => {
         console.error('Erro:', error);

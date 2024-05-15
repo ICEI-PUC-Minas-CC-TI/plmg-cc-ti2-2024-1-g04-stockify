@@ -1,114 +1,83 @@
-const apiUrl = 'https://jsonserver.samaranegabriel.repl.co/fornecedores';
+document.addEventListener('DOMContentLoaded', () => {
+    const cadastrarFornecedor = document.getElementById('cadastrarFornecedor');
+    const tableClientBody = document.querySelector('#tableClient tbody');
 
-// CRUD - CREATE
-const createClient = async (client) => {
-    await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(client)
-    });
-}
-
-// CRUD - READ
-const readClient = async () => {
-    const response = await fetch(apiUrl);
-    return response.json();
-}
-
-// CRUD - UPDATE
-const updateClient = async (id, client) => {
-    console.log(client);
-    await fetch(`${apiUrl}/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(client)
-    });
-}
-
-// CRUD - DELETE
-const deleteClient = async (id) => {
-    await fetch(`${apiUrl}/${id}`, {
-        method: 'DELETE'
-    });
-}
-
-// Validação de campos e limpeza de campos
-const isValidFields = () => document.getElementById('form').reportValidity()
-
-// Salvar Cliente
-const saveClient = async () => {
-    if (isValidFields()) {
-        const client = {
-            fornecedor: document.getElementById('nome').value,
-            celular: document.getElementById('telefone').value,
-            endereco: document.getElementById('endereco').value,
-            categoria: document.getElementById('categoria').value
-        };
-        
-        const id = document.getElementById('nome').dataset.index;
-        if (id == 'new') {
-            await createClient(client);
-            alert("Fornecedor cadastrado com sucesso!");
-        } else {
-            await updateClient(id, client);
-            alert("Fornecedor atualizado com sucesso!");
-        }
-        await updateTable();
+    if (cadastrarFornecedor && tableClientBody) {
+        handleSearch();
+    } else {
+        console.error("Elementos 'cadastrarFornecedor' ou 'tableClientBody' não encontrados no DOM.");
     }
+});
+
+async function handleSearch() {
+    // Obtendo a lista de fornecedores
+    const fornecedores = await fetchFornecedores();
+    displayResults(fornecedores);
+    return fornecedores;
 }
 
-// Criar linha na tabela
-const createRow = (client, index) => {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-        <td>${client.fornecedor}</td>
-        <td>${client.categoria}</td>
-        <td>${client.celular}</td>
-        <td>${client.endereco}</td>
-
-    `;
-    document.querySelector('#tableClient>tbody').appendChild(newRow);
-}
-
-// Limpar tabela
-const clearTable = () => {
-    const rows = document.querySelectorAll('#tableClient>tbody tr');
-    rows.forEach(row => row.parentNode.removeChild(row));
-}
-
-// Atualizar tabela
-const updateTable = async () => {
-    const dbClient = await readClient();
-    clearTable();
-    dbClient.forEach(createRow);
-}
-
-// Manipulador para editar e excluir
-const editDelete = async (event) => {
-    if (event.target.type == 'button') {
-        const [action, id] = event.target.id.split('-');
-        console.log(`Action: ${action}, ID: ${id}`); // Adiciona log para depuração
-        if (action == 'edit') {
-            console.log(`Editando cliente com ID: ${id}`); // Log ao tentar editar
-            // Implemente a lógica de edição aqui. Você pode redirecionar para outra página ou usar outra estratégia.
-        } else if (action == 'delete') {
-            console.log(`Excluindo cliente com ID: ${id}`); // Log ao tentar excluir
-            const client = (await readClient()).find(client => client.id == id);
-            const response = confirm(`Deseja realmente excluir o fornecedor ${client.fornecedor}`);
-            if (response) {
-                await deleteClient(id);
-                await updateTable();
+async function fetchFornecedores() {
+    try {
+        const response = await fetch('http://localhost:6789/fornecedor/getAll', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
             }
+        });
+        if (!response.ok) {
+            throw new Error('Erro ao obter dados do servidor');
         }
+        return await response.json();
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Ocorreu um erro ao retornar os fornecedores. Por favor, tente novamente.');
+        throw error;
     }
 }
 
-// Event Listener para a tabela
-document.querySelector('#tableClient>tbody').addEventListener('click', editDelete);
+function displayResults(resultados) {
+    const tableClientBody = document.querySelector('#tableClient tbody');
+    if (!tableClientBody) {
+        console.error("Elemento 'tableClientBody' não encontrado no DOM.");
+        return;
+    }
 
-// Inicialização
-updateTable();
+    if (resultados && resultados.length > 0) {
+        let html = resultados.map(fornecedor => `
+            <tr data-id="${fornecedor.id}" class="fornecedor-row"> <!-- Adicionando o ID do fornecedor como atributo data-id -->
+                <td>${fornecedor.nome}</td>
+                <td>${fornecedor.categoria}</td>
+                <td>${fornecedor.celular}</td>
+                <td>${fornecedor.endereco}</td>
+            </tr>
+        `).join('');
+        tableClientBody.innerHTML = html;
+
+        // Adicionando evento de clique para cada linha da tabela
+        const rows = document.querySelectorAll('.fornecedor-row');
+        rows.forEach(row => {
+            row.addEventListener('click', () => {
+                const fornecedorId = row.dataset.id;
+                redirecionarParaEditarFornecedor(fornecedorId);
+            });
+        });
+    } else {
+        console.log('Nenhum resultado encontrado.');
+        tableClientBody.innerHTML = '<tr><td colspan="4">Nenhum Fornecedor cadastrado.</td></tr>';
+        tableClientBody.style.pointerEvents = 'none'; // Desativa o evento de clique na tabela
+        tableClientBody.style.cursor = 'default'; // Altera o cursor para o padrão
+    }
+}
+
+function redirecionarParaEditarFornecedor(id) {
+    window.location.href = `editarFornecedor.html?id=${id}`;
+}
+
+document.querySelector('#tableClient>tbody').addEventListener('click', (event) => {
+    const row = event.target.closest('tr');
+    if (row) {
+        const fornecedorId = row.dataset.id; // Esta linha imprime o ID do fornecedor no console
+        window.location.href = `editarFornecedor.html?id=${fornecedorId}`;
+        console.log("ID do fornecedor:", fornecedorId);
+    }
+});

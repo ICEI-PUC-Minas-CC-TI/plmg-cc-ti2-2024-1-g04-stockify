@@ -1,5 +1,4 @@
-//Função cadastra funcionário
-
+// Função cadastra funcionário
 function cadastraFornecedor(event) {
   event.preventDefault();
   const formData = {
@@ -16,10 +15,16 @@ function cadastraFornecedor(event) {
     },
     body: JSON.stringify(formData),
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao cadastrar fornecedor');
+      }
+      return response.json();
+    })
     .then(data => {
-      alert("FORNECEDOR CADASTRADO COM SUCESSO"); // Movido o alert para dentro do bloco .then()
+      alert("FORNECEDOR CADASTRADO COM SUCESSO");
       console.log('Sucesso:', data);
+      window.location.href = 'fornecedor.html';
     })
     .catch((error) => {
       console.error('Erro:', error);
