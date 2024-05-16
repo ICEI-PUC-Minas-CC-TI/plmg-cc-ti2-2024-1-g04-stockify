@@ -83,17 +83,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-function setEmployeeId(userId) {
-  const employeeIdSpan = document.getElementById('employeeId');
-  if (employeeIdSpan) {
-      employeeIdSpan.textContent = userId;
-  } else {
-      console.error("Elemento employeeIdSpan não encontrado.");
-  }
-}
 
-// Chamada da função, passando o ID do usuário como argumento
-document.addEventListener('DOMContentLoaded', function() {
-  const userId = obterIdDoUsuario(); // Exemplo: função para obter o ID do usuário de algum lugar
-  setEmployeeId(userId); // Passando o ID do usuário para a função que define o conteúdo do elemento 'employeeId'
-});
