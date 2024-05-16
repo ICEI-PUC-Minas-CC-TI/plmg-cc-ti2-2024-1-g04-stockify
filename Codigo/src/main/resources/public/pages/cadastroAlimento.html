@@ -113,7 +113,9 @@
                     <input id="m-Quantidade" type="number" required />
 
                     <label for="m-Fornecedor">Fornecedor</label>
-                    <input id="m-Fornecedor" type="text" required />
+                    <select id="m-Fornecedor" required>
+                      <option value="" disabled selected>Selecione um fornecedor</option>
+                    </select>
 
                     <label for="m-Fornecedor">Lote</label>
                     <input id="m-Lote" type="text" required />
@@ -369,6 +371,16 @@ td button i:first-child {
   .form-container {
     width: 90%;
   }
+}
+
+input, select {
+  width: 100%;
+  outline: none;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border: 1px solid #0f0e0e;
+  border-radius: 5px;
+  font-size: 18px;
 }
 
 </style>

@@ -12,6 +12,8 @@ async function createItem(item) {
             const data = await response.json();
             console.log('Sucesso:', data);
             alert("Feito com sucesso");
+            // Redirecionar para a página de estoque após sucesso
+            window.location.href = 'alimentos.html'; // Certifique-se de que o caminho está correto
         } else {
             throw new Error('Erro ao cadastrar o produto.');
         }
@@ -21,7 +23,30 @@ async function createItem(item) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+async function fetchFornecedores() {
+    try {
+        const response = await fetch('/fornecedor/getAll');
+        if (response.ok) {
+            const fornecedores = await response.json();
+            const fornecedorSelect = document.querySelector('#m-Fornecedor');
+            fornecedores.forEach(fornecedor => {
+                const option = document.createElement('option');
+                option.value = fornecedor.nome; // Usar o nome como valor
+                option.textContent = fornecedor.nome; // Mostrar o nome no texto
+                fornecedorSelect.appendChild(option);
+            });
+        } else {
+            throw new Error('Erro ao buscar fornecedores.');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Ocorreu um erro ao buscar os fornecedores. Por favor, tente novamente.');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+    await fetchFornecedores(); // Carrega os fornecedores ao carregar a página
+
     const btnSalvar = document.querySelector('#btnSalvar');
 
     btnSalvar.onclick = async function(e) {
@@ -38,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             nome: sProduto.value,
             categoria: sCategoria.value,
             quantidade: parseInt(sQuantidade.value),
-            fornecedor: sFornecedor.value,
+            fornecedor: sFornecedor.value, // Agora isso será o nome do fornecedor
             lote: sLote.value,
             datavalidade: sData.value
         };
