@@ -40,7 +40,10 @@ public class Aplicacao {
         // Rota para lidar com o login do usuário
         put("/login/procura", (request, response) -> usuarioService.login(request, response));
         post("/login/insere", (request, response) -> usuarioService.criarUsuario(request, response));
-        get("/funcionarios/usuarios", (request, response) -> usuarioService.getAllUsuarios(request, response));
+
+        //Rota para Administracao de funcionarios
+        get("/funcionarios/getAll", (request, response) -> usuarioService.getAllUsuarios(response));
+        get("/funcionario/:id", (request, response) -> usuarioService.getById(request,response));
 
         // Rotas para lidar com os produtos
         post("/produto/insere", (request, response) -> produtoService.insert(request, response));

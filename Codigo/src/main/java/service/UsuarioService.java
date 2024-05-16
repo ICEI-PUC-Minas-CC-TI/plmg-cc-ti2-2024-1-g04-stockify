@@ -107,13 +107,33 @@ public class UsuarioService {
         }
     }
 
-    public Object getAllUsuarios(Request request, Response response) {
+    public Object getAllUsuarios(Response response) {
         List<Usuario> usuarios = usuarioDAO.getAllUsuarios();
         if (!usuarios.isEmpty()) {
-            return usuarios;
+            // Serializar a lista de usuários para JSON
+            Gson gson = new Gson();
+            String usuariosJson = gson.toJson(usuarios);
+            // Configurar o cabeçalho da resposta para indicar que é JSON
+            response.type("application/json");
+            // Retornar a lista serializada como JSON
+            return usuariosJson;
         } else {
             response.status(404); // Not Found
             return "Nenhum usuário encontrado.";
+        }
+    }
+
+    public Object getById(Request request, Response response) {
+        int id = Integer.parseInt(request.params(":id"));
+        Usuario usuario = usuarioDAO.getById(id);
+        if (usuario != null) {
+            Gson gson = new Gson();
+            String usuarioJson = gson.toJson(usuario);
+            response.type("application/json");
+            return usuarioJson;
+        } else {
+            response.status(404); // Not Found
+            return "Usuário não encontrado.";
         }
     }
 }

@@ -135,4 +135,22 @@ public class UsuarioDAO extends DAO {
         }
         return usuarios;
     }
+    // Método para buscar um usuário por ID
+    public Usuario getById(int id) {
+        Usuario usuario = null;
+        try {
+            String sql = "SELECT * FROM users WHERE id = ?";
+            PreparedStatement st = conexao.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar usuário por ID", e);
+        }
+        return usuario;
+    }
 }
