@@ -1,86 +1,95 @@
-document.addEventListener('DOMContentLoaded', function() {
-  getAllUsuarios();
+document.addEventListener('DOMContentLoaded', () => {
+  handleSearch();
 
+  // Adicionar listener ao botão de pesquisa
+  const searchButton = document.getElementById('searchButton');
+  searchButton.addEventListener('click', handleSearch);
+
+  // Adicionar listener ao input de pesquisa para acionar a busca ao digitar
   const searchInput = document.getElementById('searchInput');
-  searchInput.addEventListener('input', function() {
-      const term = this.value.trim().toLowerCase();
-      filterUsuarios(term);
-  });
+  searchInput.addEventListener('input', handleSearch);
 });
 
-function filterUsuarios(term) {
-  fetch('/funcionarios/getAll')
-      .then(response => response.json())
-      .then(data => {
-          const filteredUsuarios = data.filter(usuario => {
-              return usuario.email.toLowerCase().includes(term) ||
-                     usuario.username.toLowerCase().includes(term);
-          });
-          createEmployeeCards(filteredUsuarios);
-      })
-      .catch(error => console.error('Erro ao obter usuários:', error));
+async function handleSearch() {
+  try {
+      const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      const funcionarios = await fetchFuncionarios();
+      const filteredFuncionarios = funcionarios.filter(funcionario => 
+          funcionario.username.toLowerCase().includes(searchInput)
+      );
+      displayResults(filteredFuncionarios);
+  } catch (error) {
+      console.error('Erro:', error);
+      alert('Ocorreu um erro ao retornar os funcionários. Por favor, tente novamente.');
+  }
 }
 
-function getAllUsuarios() {
-  fetch('/funcionarios/getAll')
-      .then(response => response.json())
-      .then(data => {
-          // Chame uma função para criar os cards com base nos dados recebidos
-          createEmployeeCards(data);
-      })
-      .catch(error => console.error('Erro ao obter usuários:', error));
-}
-
-function createEmployeeCards(usuarios) {
-  const container = document.getElementById('employeeCardContainer');
-  container.innerHTML = ''; // Limpar qualquer conteúdo anterior
-
-  usuarios.forEach(usuario => {
-      const card = document.createElement('div');
-      card.classList.add('employeeCard');
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', function() {
-          // Adicione o ID do funcionário como um parâmetro na URL
-          window.location.href = `../pages/atualizaFuncionario.html?id=${usuario.id}`;
+async function fetchFuncionarios() {
+  try {
+      const response = await fetch('/funcionarios/getAll', {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+          }
       });
 
-      const header = document.createElement('header');
-      header.textContent = `ID: ${usuario.id}`;
+      if (response.status === 404) {
+          return [];
+      }
 
-      const email = document.createElement('p');
-      email.textContent = `email: ${usuario.email}`;
+      if (!response.ok) {
+          throw new Error('Erro ao obter dados do servidor');
+      }
 
-      const username = document.createElement('p');
-      username.textContent = `username: ${usuario.username}`;
-
-      card.appendChild(header);
-      card.appendChild(email);
-      card.appendChild(username);
-
-      container.appendChild(card);
-  });
+      return await response.json();
+  } catch (error) {
+      console.error('Erro:', error);
+      alert('Ocorreu um erro ao retornar os funcionários. Por favor, tente novamente.');
+      throw error;
+  }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  getAllUsuarios();
-});
-
-// Na página de atualização (atualizaFuncionario.html)
-document.addEventListener('DOMContentLoaded', function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const userId = urlParams.get('id');
-
-  console.log("ID do usuário recebido:", userId); // Verificar se o ID do usuário está sendo recebido corretamente
-
-  // Exibir o ID do funcionário na página
-  const employeeIdSpan = document.getElementById('employeeId');
-  console.log("Elemento employeeIdSpan:", employeeIdSpan); // Verificar se o elemento com o ID 'employeeId' foi encontrado
-
-  if (employeeIdSpan) {
-      employeeIdSpan.textContent = userId; // Definir o texto apenas se o elemento existir
-  } else {
-      console.error("Elemento employeeIdSpan não encontrado."); // Registrar um erro se o elemento não for encontrado
+function displayResults(funcionarios) {
+  const employeeCardContainer = document.getElementById('employeeCardContainer');
+  if (!employeeCardContainer) {
+      console.error("Contêiner de cards de funcionários não encontrado no DOM.");
+      return;
   }
-});
 
+  employeeCardContainer.innerHTML = '';
 
+  if (funcionarios && funcionarios.length > 0) {
+      funcionarios.forEach(funcionario => {
+          const employeeCard = createEmployeeCard(funcionario);
+          employeeCardContainer.appendChild(employeeCard);
+      });
+  } else {
+      console.log('Nenhum funcionário encontrado.');
+      employeeCardContainer.innerHTML = '<p>Nenhum funcionário cadastrado.</p>';
+  }
+}
+
+function createEmployeeCard(funcionario) {
+  const card = document.createElement('div');
+  card.classList.add('employeeCard');
+
+  const cardContent = `
+      <h3>${funcionario.username}</h3>
+      <p>Email: ${funcionario.email}</p>
+      <p>CPF: ${funcionario.cpf}</p>
+      <p>Salario: R$${funcionario.salario}</p>
+      <p>Idade: ${funcionario.idade}</p>
+  `;
+
+  card.innerHTML = cardContent;
+
+  card.addEventListener('click', () => {
+      redirectToEmployeePage(funcionario.id);
+  });
+
+  return card;
+}
+
+function redirectToEmployeePage(employeeId) {
+  window.location.href = `atualizaFuncionario.html?id=${employeeId}`;
+}

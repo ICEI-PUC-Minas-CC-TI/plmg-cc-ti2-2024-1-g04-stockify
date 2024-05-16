@@ -4,12 +4,18 @@ function cadastraFuncionario(event) {
   const usernameElement = document.getElementById('username');
   const emailElement = document.getElementById('email');
   const passwordElement = document.getElementById('password');
+  const idadeElement = document.getElementById("idade");
+  const cpfElement = document.getElementById("cpf");
+  const salarioElement = document.getElementById("salario");
   
-  if (usernameElement && emailElement && passwordElement) {
+  if (usernameElement && emailElement && passwordElement && idadeElement && cpfElement && salarioElement) {
     const formData = {
       username: usernameElement.value,
       email: emailElement.value,
       senha: passwordElement.value,
+      idade: idadeElement.value,
+      cpf: cpfElement.value,
+      salario: salarioElement.value,
     };
     
     console.log(formData);

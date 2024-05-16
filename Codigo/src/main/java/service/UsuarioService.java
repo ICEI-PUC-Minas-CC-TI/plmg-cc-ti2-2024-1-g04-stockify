@@ -14,15 +14,17 @@ public class UsuarioService {
 
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    // Método para criar um usuário
     public Object criarUsuario(Request request, Response response) {
         Gson gson = new Gson();
         Usuario usuario = gson.fromJson(request.body(), Usuario.class);
 
-        // Imprimir os valores dos parâmetros email e password
+        // Imprimir os valores dos parâmetros
         System.out.println("Email recebido: " + usuario.getEmail());
-        System.out.println("Senha recebida: " + usuario.getSenha()); // olhar senha
-        System.out.println("Nome recebido: " + usuario.getusername()); // olhar senha
+        System.out.println("Senha recebida: " + usuario.getSenha());
+        System.out.println("Nome recebido: " + usuario.getUsername());
+        System.out.println("Salário recebido: " + usuario.getSalario());
+        System.out.println("CPF recebido: " + usuario.getCpf());
+        System.out.println("Idade recebida: " + usuario.getIdade());
 
         // Verificar se o usuário já existe
         Usuario usuarioExistente = usuarioDAO.buscarUsuarioPorEmail(usuario.getEmail());
@@ -40,7 +42,6 @@ public class UsuarioService {
         return gson.toJson(usuario);
     }
 
-    // Método para recuperar um usuário por ID
     public Object buscarUsuario(Request request, Response response) {
         int id = Integer.parseInt(request.params(":id"));
         Usuario usuario = usuarioDAO.buscarUsuarioPorId(id);
@@ -52,7 +53,6 @@ public class UsuarioService {
         }
     }
 
-    // Método para atualizar um usuário
     public Object atualizarUsuario(Request request, Response response) {
         int id = Integer.parseInt(request.params(":id"));
         Gson gson = new Gson();
@@ -69,7 +69,6 @@ public class UsuarioService {
         }
     }
 
-    // Método para excluir um usuário
     public Object excluirUsuario(Request request, Response response) {
         int id = Integer.parseInt(request.params(":id"));
         Usuario usuarioExistente = usuarioDAO.buscarUsuarioPorId(id);
@@ -88,7 +87,7 @@ public class UsuarioService {
             Gson gson = new Gson();
             Usuario usuario = gson.fromJson(request.body(), Usuario.class);
             Usuario auxiliar = usuarioDAO.autenticarUsuario(usuario.getEmail());
-    
+
             if (auxiliar != null && BCrypt.checkpw(usuario.getSenha(), auxiliar.getSenha())) {
                 // Se o usuário for autenticado com sucesso
                 response.status(200); // OK

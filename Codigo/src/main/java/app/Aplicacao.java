@@ -16,21 +16,6 @@ public class Aplicacao {
         
         staticFiles.location("/public");
 
-        // Rotas para lidar com operações de produtos
-        // get("/produto/insert", (request, response) -> produtoService.insert(request, response));
-
-        // post("/produto/insert", (request, response) -> produtoService.insert(request, response));
-
-        // get("/produto/:id", (request, response) -> produtoService.get(request, response));
-
-        // get("/produto/list", (request, response) -> produtoService.getAll(request, response));
-
-        // get("/produto/update/:id", (request, response) -> produtoService.getToUpdate(request, response));
-
-        // post("/produto/update/:id", (request, response) -> produtoService.update(request, response));
-
-        // get("/produto/delete/:id", (request, response) -> produtoService.delete(request, response));
-
         // Rota para servir o arquivo form.html como página inicial
         get("/", (request, response) -> {
             response.redirect("/index.html");
@@ -44,6 +29,8 @@ public class Aplicacao {
         //Rota para Administracao de funcionarios
         get("/funcionarios/getAll", (request, response) -> usuarioService.getAllUsuarios(response));
         get("/funcionario/:id", (request, response) -> usuarioService.getById(request,response));
+        put("/funcionario/atualizar/:id", (request, response) -> usuarioService.atualizarUsuario(request, response));
+        delete("/funcionario/excluir/:id", (request, response) -> usuarioService.excluirUsuario(request, response));
 
         // Rotas para lidar com os produtos
         post("/produto/insere", (request, response) -> produtoService.insert(request, response));

@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.Usuario;
 
 public class UsuarioDAO extends DAO {
@@ -27,7 +26,8 @@ public class UsuarioDAO extends DAO {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"),
+                        rs.getString("senha"), rs.getDouble("salario"), rs.getString("cpf"), rs.getInt("idade"));
             }
             rs.close();
             st.close();
@@ -46,7 +46,8 @@ public class UsuarioDAO extends DAO {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"),
+                        rs.getString("senha"), rs.getDouble("salario"), rs.getString("cpf"), rs.getInt("idade"));
             }
             rs.close();
             st.close();
@@ -59,11 +60,14 @@ public class UsuarioDAO extends DAO {
     // Método para salvar um usuário
     public void salvarUsuario(Usuario usuario) {
         try {
-            String sql = "INSERT INTO users (username, email, senha) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO users (username, email, senha, salario, cpf, idade) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement st = conexao.prepareStatement(sql);
-            st.setString(1, usuario.getusername());
+            st.setString(1, usuario.getUsername());
             st.setString(2, usuario.getEmail());
             st.setString(3, usuario.getSenha());
+            st.setDouble(4, usuario.getSalario());
+            st.setString(5, usuario.getCpf());
+            st.setInt(6, usuario.getIdade());
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
@@ -74,11 +78,15 @@ public class UsuarioDAO extends DAO {
     // Método para atualizar um usuário
     public void atualizarUsuario(Usuario usuario) {
         try {
-            String sql = "UPDATE users SET email = ?, senha = ? WHERE id = ?";
+            String sql = "UPDATE users SET username = ?, email = ?, senha = ?, salario = ?, cpf = ?, idade = ? WHERE id = ?";
             PreparedStatement st = conexao.prepareStatement(sql);
-            st.setString(1, usuario.getEmail());
-            st.setString(2, usuario.getSenha());
-            st.setInt(3, usuario.getId());
+            st.setString(1, usuario.getUsername());
+            st.setString(2, usuario.getEmail());
+            st.setString(3, usuario.getSenha());
+            st.setDouble(4, usuario.getSalario());
+            st.setString(5, usuario.getCpf());
+            st.setInt(6, usuario.getIdade());
+            st.setInt(7, usuario.getId());
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
@@ -108,7 +116,8 @@ public class UsuarioDAO extends DAO {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"),
+                        rs.getString("senha"), rs.getDouble("salario"), rs.getString("cpf"), rs.getInt("idade"));
             }
             rs.close();
             st.close();
@@ -125,7 +134,8 @@ public class UsuarioDAO extends DAO {
             PreparedStatement st = conexao.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
+                Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"),
+                        rs.getString("senha"), rs.getDouble("salario"), rs.getString("cpf"), rs.getInt("idade"));
                 usuarios.add(usuario);
             }
             rs.close();
@@ -135,6 +145,7 @@ public class UsuarioDAO extends DAO {
         }
         return usuarios;
     }
+
     // Método para buscar um usuário por ID
     public Usuario getById(int id) {
         Usuario usuario = null;
@@ -144,7 +155,8 @@ public class UsuarioDAO extends DAO {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("senha"));
+                usuario = new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("email"),
+                        rs.getString("senha"), rs.getDouble("salario"), rs.getString("cpf"), rs.getInt("idade"));
             }
             rs.close();
             st.close();
