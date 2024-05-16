@@ -23,14 +23,13 @@
 
 <body>
 
-    <div class="container-fluid p-0 d-flex h-100" id="container">
+    <div class="container-fluid p-0 d-flex h-100">
         <div id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white offcanvas-md offcanvas-start"
-        style="width: 280px;">
-        <a href="homepage.html" class="navbar-brand">
-            <h5>Stockify</h5>
-        </a>
-        <hr>
-        <ul class="mynav nav nav-pills flex-column mb-auto">
+            style="width: 280px;">
+            <a href="homepage.html" class="navbar-brand">
+                <h5>Stockify</h5>
+            </a>
+            <hr>
             <ul class="mynav nav nav-pills flex-column mb-auto">
                 <li class="nav-item mb-1">
                     <a href="calendario.html" class="" onclick="btn1()">
@@ -62,21 +61,31 @@
                         Suporte
                     </a>
                 </li>
+                <li class="nav-item mb-1">
+                    <a href="cadastroPrato.html" class="" onclick="">
+                        Cadastro de Prato
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="pratos.html" class="" onclick="">
+                        Pratos
+                    </a>
+                </li>
+                
             </ul>
-        </ul>
-        <hr>
-        <div class="d-flex">
-            <img src="https://fakeimg.pl/300/" width="50" height="26" class="img-fluid rounded-circle me-2" alt="">
-            <span>
-                <h6 class="mt-1 mb-0" id="usernameDisplay"></h6>
-                <small class="" id="emailDisplay"></small>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16" onclick="logout()">
-                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
-                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                  </svg>
-            </span>
+            <hr>
+            <div class="d-flex">
+                <img src="https://fakeimg.pl/300/" width="50" height="26" class="img-fluid rounded-circle me-2" alt="">
+                <span>
+                    <h6 class="mt-1 mb-0" id="usernameDisplay"></h6>
+                    <small class="" id="emailDisplay"></small>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16" onclick="logout()">
+                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                    </svg>
+                </span>
+            </div>
         </div>
-    </div>
         <div class="bg-light flex-fill">
             <div class="p-2 d-md-none d-flex text-white bg-dark">
                 <a href="#" class="text-white" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar">
