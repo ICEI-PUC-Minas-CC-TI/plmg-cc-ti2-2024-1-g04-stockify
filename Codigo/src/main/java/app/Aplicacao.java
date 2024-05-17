@@ -35,6 +35,10 @@ public class Aplicacao {
         // Rotas para lidar com os produtos
         post("/produto/insere", (request, response) -> produtoService.insert(request, response));
         get("/produto/getAll", (request,response) -> produtoService.getAll(request, response));
+        get("/produto/fornecedores", (request, response) -> produtoService.getAllFornecedores(request, response));
+        get("/produto/:id", (request, response) -> produtoService.getById(request, response));
+        put("/produto/atualizar/:id", (request, response) -> produtoService.atualizarProduto(request, response));
+        delete("/produto/excluir/:id", (request, response) -> produtoService.excluirProduto(request, response)); 
 
         // Rotas fornecedores
         post("/fornecedor/insere", (request, response) -> fornecedorService.inserirFornecedor(request, response)); 

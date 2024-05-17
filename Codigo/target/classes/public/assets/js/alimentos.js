@@ -1,4 +1,4 @@
-const teste = handleSearch()
+const teste = handleSearch();
 
 async function busca() {
     try {
@@ -20,31 +20,40 @@ async function busca() {
 }
 
 async function handleSearch() {
-    const searchTerm = document.getElementById('searchBar').value.trim().toLowerCase();
+    try {
+        // Faz a busca dos alimentos
+        const alimentos = await fetchAlimentos();
 
-    // Obtendo a lista de alimentos
-    const alimentos = await fetchAlimentos(); // Alterado para aguardar a resposta
+        if (alimentos.length === 0) {
+            // Se não houver nenhum produto cadastrado, exibe a mensagem centralizada
+            document.getElementById('results').innerHTML = "<p class='no-products'>Nenhum Produto Cadastrado...</p>";
+            return;
+        }
 
-    let str = "";
-    
-    alimentos.map(aux => {
-        str += `<div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">${aux.nome}</h3>
-                    <p class="card-text">Categoria: ${aux.categoria}</p>
-                    <p class="card-text">Quantidade: ${aux.quantidade}</p>
-                    <p class="card-text">Fornecedor: ${aux.fornecedor}</p>
-                    <p class="card-text">Lote: ${aux.lote}</p>
-                    <p class="card-text">Data: ${aux.datavencimento}</p>
+        let str = "";
+
+        // Itera sobre os alimentos e gera os cards
+        alimentos.forEach(alimento => {
+            str += `
+                <div class="card" onclick="redirectToEditPage(${alimento.id})">
+                    <div class="card-body">
+                        <h3 class="card-title">${alimento.nome}</h3>
+                        <p class="card-text">Categoria: ${alimento.categoria}</p>
+                        <p class="card-text">Quantidade: ${alimento.quantidade}</p>
+                        <p class="card-text">Fornecedor: ${alimento.fornecedor}</p>
+                        <p class="card-text">Lote: ${alimento.lote}</p>
+                        <p class="card-text">Data: ${alimento.datavencimento}</p>
+                    </div>
                 </div>
-            </div>
-            `
-    })
+            `;
+        });
 
-    document.getElementById('results').innerHTML = str;
-
-    return alimentos;
+        document.getElementById('results').innerHTML = str;
+    } catch (error) {
+        console.error("Ocorreu um erro na busca:", error);
+    }
 }
+
 
 async function fetchAlimentos() {
     try {
@@ -65,12 +74,11 @@ async function fetchAlimentos() {
     }
 }
 
-
 function displayResults(resultados) {
     if (resultados && resultados.length > 0) {
         const resultsDiv = document.getElementById('results');
         const html = resultados.map(alimento => `
-            <div class="card">
+            <div class="card" onclick="redirectToEditPage(${alimento.id})">
                 <div class="card-body">
                     <h3 class="card-title">${alimento.nome}</h3>
                     <p class="card-text">Categoria: ${alimento.categoria}</p>
@@ -83,6 +91,11 @@ function displayResults(resultados) {
         `).join('');
         resultsDiv.innerHTML = html;
     } else {
-        console.log('Nenhum resultado encontrado.');
+        // Se não houver resultados, exibe a mensagem centralizada
+        document.getElementById('results').innerHTML = "<p class='no-products'>Nenhum Produto Cadastrado...</p>";
     }
+}
+
+function redirectToEditPage(id) {
+    window.location.href = `editarAlimentos.html?id=${id}`; // Adiciona o ID do produto como parâmetro na URL
 }

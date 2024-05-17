@@ -10,7 +10,6 @@ public class Produto {
     private String datavalidade;
 
     public Produto() {
-        id = 0;
         nome = "";
         categoria = "";
         quantidade = 0;
@@ -37,6 +36,8 @@ public class Produto {
     public void setId(int id) {
         this.id = id;
     }
+
+    // Remove o método setId(int id), pois o ID será gerado automaticamente pelo banco de dados
 
     public String getNome() {
         return nome;
@@ -85,7 +86,6 @@ public class Produto {
     public void setDatavalidade(String datavalidade) {
         this.datavalidade = datavalidade;
     }
-
     // Outros métodos
 
     @Override

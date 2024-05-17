@@ -14,16 +14,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/navbar.css">
-    <link href="../assets/css/homepage.css" rel="stylesheet" type="text/css" />
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../assets/css/cadastroFornecedor.css">
+    <script src="../assets/js/editarAlimentos.js"></script>
     <script src="../assets/js/general.js"></script>
 </head>
 
 <body>
-
     <div class="container-fluid p-0 d-flex h-100">
         <div id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white offcanvas-md offcanvas-start"
             style="width: 280px;">
@@ -87,7 +88,6 @@
                 </span>
             </div>
         </div>
-
         <div class="bg-light flex-fill">
             <div class="p-2 d-md-none d-flex text-white bg-dark">
                 <a href="#" class="text-white" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar">
@@ -97,40 +97,37 @@
             </div>
             <div class="p-4">
                 <div id="content">
-                    <h3>Bem-vindo ao Stockify!</h3>
-                    <p>Por favor, selecione uma das opções abaixo para continuar:</p>
-                    <ul>
-                        <li>
-                            <strong>Calendário:</strong> Gerencie eventos e compromissos. Utilize esta opção para visualizar, criar e gerenciar eventos e compromissos importantes para sua empresa.
-                        </li>
-                        <li>
-                            <strong>Administração de Funcionários:</strong> Acesse informações sobre os funcionários. Aqui você pode gerenciar dados dos funcionários, como informações pessoais, cargos, horários, e mais.
-                        </li>
-                        <li>
-                            <strong>Estoque:</strong> Gerencie o estoque de produtos ou materiais. Esta opção permite o controle e a gestão dos itens em estoque, verificando a disponibilidade e organização dos produtos.
-                        </li>
-                        <li>
-                            <strong>Cadastro de Produtos:</strong> Adicione ou atualize produtos. Utilize esta funcionalidade para cadastrar novos produtos no sistema ou atualizar informações de produtos existentes.
-                        </li>
-                        <li>
-                            <strong>Fornecedores:</strong> Informações sobre os fornecedores. Acesse dados e informações relacionadas aos fornecedores com os quais a empresa mantém relações comerciais.
-                        </li>
-                        <li>
-                            <strong>Suporte:</strong> Entre em contato conosco para obter suporte. Caso necessite de assistência ou suporte técnico, esta opção permite entrar em contato com nossa equipe para obter ajuda.
-                        </li>
-                        <li>
-                            <strong>Cadastro de Pratos:</strong> Adicione ou atualize pratos com os ingredientes disponíveis em estoque. Esta opção permite cadastrar novos pratos no sistema, utilizando os ingredientes disponíveis no estoque da empresa.
-                        </li>
-                        <li>
-                            <strong>Pratos:</strong> Visualize, edite ou exclua pratos cadastrados. Aqui você pode visualizar todos os pratos cadastrados no sistema, editar suas informações ou excluir pratos existentes.
-                        </li>
-                    </ul>
+                    <form id="cadastroForm" class="form-container">
+                        <h2 class="text-center">Editar Produto</h2>
+                        <label for="m-Produto">Produto</label>
+                        <input id="m-Produto" type="text" required />
+
+                        <label for="m-Categoria">Categoria</label>
+                        <input id="m-Categoria" type="text" required />
+
+                        <label for="m-Quantidade">Quantidade</label>
+                        <input id="m-Quantidade" type="number" required />
+
+                        <label for="m-Fornecedor">Fornecedor</label>
+                        <select id="m-Fornecedor" required>
+                        <option value="" disabled selected>Selecione um fornecedor</option>
+                        </select>
+
+                        <label for="m-Fornecedor">Lote</label>
+                        <input id="m-Lote" type="text" required />
+
+                        <label for="m-Fornecedor">Data de Validade </label>
+                        <input id="m-Data" type="date" required />
+                        <div class="text-center">
+                            <input type="submit" value="Editar" class="btn bg-dark text-white mt-3 w-50" onclick="editarProduto()">
+                            <!-- Botão de exclusão -->
+                            <button type="button" class="btn bg-danger text-white mt-3 w-50" onclick="excluirProduto()">Excluir</button>
+                        </div>
+                    </form>
                 </div>
-                
             </div>
         </div>
     </div>
-
 </body>
 
 <style>
@@ -187,44 +184,41 @@ svg{
   margin-bottom: 17px;
 }
 
-#content {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 50px;
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    border-radius: 16px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-#content h2 {
-    font-size: 42px;
-    margin-bottom: 40px;
-    color: #333;
-}
-
-#content p {
-    font-size: 20px;
-    margin-bottom: 30px;
-    color: #555;
-}
-
-#content ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-#content ul li {
-    font-size: 19px;
+.form-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    border-radius: 10px;
+    width: 50%;
+  }
+  
+  .form-container label {
+    font-size: 18px;
+    width: 100%;
+    margin-left: 10px;
+  }
+  
+  .form-container input {
+    width: 100%;
+    outline: none;
+    padding: 5px 10px;
     margin-bottom: 20px;
+    border: 1px solid #0f0e0e;
+    border-radius: 5px;
+  }
+  
+  input, select {
+  width: 100%;
+  outline: none;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border: 1px solid #0f0e0e;
+  border-radius: 5px;
+  font-size: 18px;
 }
-
-#content ul li strong {
-    font-weight: bold;
-    color: #007bff;
-}
-
 
 </style>
-
 </html>

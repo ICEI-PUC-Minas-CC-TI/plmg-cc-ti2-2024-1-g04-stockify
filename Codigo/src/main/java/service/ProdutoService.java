@@ -1,11 +1,8 @@
 package service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.List;
-
+import java.util.Optional;
 import com.google.gson.Gson;
-
 import model.Produto;
 import dao.ProdutoDAO;
 import spark.Request;
@@ -20,13 +17,9 @@ public class ProdutoService {
     }
 
     public String getAll(Request request, Response response) {
-        List<Produto> produtos = getAllProducts();
+        List<Produto> produtos = produtoDAO.getAll();
         Gson gson = new Gson();
         return gson.toJson(produtos);
-    }
-
-    private List<Produto> getAllProducts() {
-        return produtoDAO.getAll();
     }
 
     public boolean insert(Request request, Response response) {
@@ -34,32 +27,52 @@ public class ProdutoService {
         Produto produto = gson.fromJson(request.body(), Produto.class);
 
         try {
-            ProdutoDAO prDAO = new ProdutoDAO();
-            return prDAO.insert(produto);
+            return produtoDAO.insert(produto);
         } catch (Exception e) {
             System.out.println("Erro ao inserir no service: " + e.getMessage());
             return false;
         }
-
     }
 
-    public Object get(Request request, Response response) {
-        // Lógica para obter um produto do banco de dados
-        return null; // Você pode retornar algo útil aqui, se necessário
+    public String getById(Request request, Response response) {
+        int id = Integer.parseInt(request.params(":id"));
+        Optional<Produto> produto = produtoDAO.get(id);
+
+        if (produto.isPresent()) {
+            Gson gson = new Gson();
+            return gson.toJson(produto.get());
+        } else {
+            response.status(404);
+            return "Produto não encontrado";
+        }
     }
 
-    public Object getToUpdate(Request request, Response response) {
-        // Lógica para obter um produto para atualização do banco de dados
-        return null; // Você pode retornar algo útil aqui, se necessário
+    public boolean atualizarProduto(Request request, Response response) {
+        Gson gson = new Gson();
+        Produto produto = gson.fromJson(request.body(), Produto.class);
+
+        try {
+            return produtoDAO.update(produto);
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar no service: " + e.getMessage());
+            return false;
+        }
     }
 
-    public Object update(Request request, Response response) {
-        // Lógica para atualizar um produto no banco de dados
-        return null; // Você pode retornar algo útil aqui, se necessário
+    public boolean excluirProduto(Request request, Response response) {
+        int id = Integer.parseInt(request.params(":id"));
+
+        try {
+            return produtoDAO.delete(id);
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir no service: " + e.getMessage());
+            return false;
+        }
     }
 
-    public Object delete(Request request, Response response) {
-        // Lógica para excluir um produto do banco de dados
-        return null; // Você pode retornar algo útil aqui, se necessário
+    public String getAllFornecedores(Request request, Response response) {
+        List<String> fornecedores = produtoDAO.getAllFornecedores();
+        Gson gson = new Gson();
+        return gson.toJson(fornecedores);
     }
 }
