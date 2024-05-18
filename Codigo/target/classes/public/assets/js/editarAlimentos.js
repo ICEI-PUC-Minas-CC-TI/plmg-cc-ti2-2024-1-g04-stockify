@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('ID do produto:', produtoId); // Imprime o ID do produto no console
         try {
             const produto = await fetchProdutoById(produtoId);
+            await preencherOpcoesFornecedor(produto.fornecedor); // Preenche as opções do campo de fornecedor e seleciona o atual
             preencherCamposDeEdicao(produto);
-            preencherOpcoesFornecedor(); // Preenche as opções do campo de fornecedor
         } catch (error) {
             console.error('Erro ao obter dados do produto:', error);
             alert('Ocorreu um erro ao obter os dados do produto. Por favor, tente novamente.');
@@ -38,9 +38,9 @@ function preencherCamposDeEdicao(produto) {
     document.getElementById('m-Data').value = produto.datavalidade;
 }
 
-async function preencherOpcoesFornecedor() {
+async function preencherOpcoesFornecedor(fornecedorAtual) {
     try {
-        const response = await fetch('http://localhost:6789/produto/fornecedores');
+        const response = await fetch('http://localhost:6789/fornecedor/getAll'); // Endpoint para buscar todos os fornecedores
         if (!response.ok) {
             throw new Error('Erro ao obter fornecedores');
         }
@@ -48,8 +48,11 @@ async function preencherOpcoesFornecedor() {
         const selectFornecedor = document.getElementById('m-Fornecedor');
         fornecedores.forEach(fornecedor => {
             const option = document.createElement('option');
-            option.value = fornecedor;
-            option.textContent = fornecedor;
+            option.value = fornecedor.nome; // Usando o nome do fornecedor como valor
+            option.textContent = fornecedor.nome; // Assumindo que os fornecedores têm um campo nome
+            if (fornecedor.nome === fornecedorAtual) {
+                option.selected = true;
+            }
             selectFornecedor.appendChild(option);
         });
     } catch (error) {
@@ -89,7 +92,7 @@ async function editarProduto() {
             throw new Error('Erro ao atualizar produto');
         }
         alert('Produto atualizado com sucesso!');
-        // Redirecionar para produtos.html após atualizar
+        // Redirecionar para alimentos.html após atualizar
         window.location.href = 'alimentos.html';
     } catch (error) {
         console.error('Erro ao atualizar produto:', error);
@@ -108,7 +111,7 @@ async function excluirProduto() {
             throw new Error('Erro ao excluir produto');
         }
         alert('Produto excluído com sucesso!');
-        // Redirecionar para produtos.html após excluir
+        // Redirecionar para alimentos.html após excluir
         window.location.href = 'alimentos.html';
     } catch (error) {
         console.error('Erro ao excluir produto:', error);

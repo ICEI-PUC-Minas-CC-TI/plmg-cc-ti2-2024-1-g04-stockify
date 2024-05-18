@@ -30,30 +30,12 @@ async function handleSearch() {
             return;
         }
 
-        let str = "";
-
-        // Itera sobre os alimentos e gera os cards
-        alimentos.forEach(alimento => {
-            str += `
-                <div class="card" onclick="redirectToEditPage(${alimento.id})">
-                    <div class="card-body">
-                        <h3 class="card-title">${alimento.nome}</h3>
-                        <p class="card-text">Categoria: ${alimento.categoria}</p>
-                        <p class="card-text">Quantidade: ${alimento.quantidade}</p>
-                        <p class="card-text">Fornecedor: ${alimento.fornecedor}</p>
-                        <p class="card-text">Lote: ${alimento.lote}</p>
-                        <p class="card-text">Data: ${alimento.datavencimento}</p>
-                    </div>
-                </div>
-            `;
-        });
-
-        document.getElementById('results').innerHTML = str;
+        // Exibe os resultados na interface
+        displayResults(alimentos);
     } catch (error) {
         console.error("Ocorreu um erro na busca:", error);
     }
 }
-
 
 async function fetchAlimentos() {
     try {
@@ -85,7 +67,7 @@ function displayResults(resultados) {
                     <p class="card-text">Quantidade: ${alimento.quantidade}</p>
                     <p class="card-text">Fornecedor: ${alimento.fornecedor}</p>
                     <p class="card-text">Lote: ${alimento.lote}</p>
-                    <p class="card-text">Data: ${alimento.datavencimento}</p>
+                    <p class="card-text">Data: ${alimento.datavalidade}</p>
                 </div>
             </div>
         `).join('');
