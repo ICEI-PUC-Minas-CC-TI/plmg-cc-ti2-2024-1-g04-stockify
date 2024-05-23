@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
         console.error('ID do produto não encontrado na URL.');
     }
+
+    // Adiciona event listeners aos botões de editar e excluir
+    document.getElementById('btn-editar').addEventListener('click', editarProduto);
+    document.getElementById('btn-excluir').addEventListener('click', excluirProduto);
 });
 
 async function fetchProdutoById(id) {
