@@ -4,12 +4,14 @@ import static spark.Spark.*;
 import service.ProdutoService;
 import service.UsuarioService;
 import service.FornecedorService;
+import service.PratoService;
 
 public class Aplicacao {
     
     private static ProdutoService produtoService = new ProdutoService();
     private static UsuarioService usuarioService = new UsuarioService(); 
     private static FornecedorService fornecedorService = new FornecedorService();
+    private static PratoService pratoService = new PratoService();
 
     public static void main(String[] args) {
         port(6789);
@@ -45,6 +47,13 @@ public class Aplicacao {
         get("/fornecedor/getAll", (request, response) -> fornecedorService.getAll(request, response));
         get("/fornecedor/:id", (request, response) -> fornecedorService.getById(request, response));
         put("/fornecedor/atualizar/:id", (request, response) -> fornecedorService.atualizarFornecedor(request, response));
-        delete("/fornecedor/excluir/:id", (request, response) -> fornecedorService.excluirFornecedor(request, response));        
+        delete("/fornecedor/excluir/:id", (request, response) -> fornecedorService.excluirFornecedor(request, response)); 
+        
+        //Rotas pratos
+        post("/prato/insere", (request, response) -> pratoService.adicionarPrato(request, response));
+        get("/prato/getAll", (request,response) -> pratoService.obterTodosPratos(request, response));
+        get("/prato/:id", (request, response) -> pratoService.obterPratoPorId(request, response));
+        put("/prato/atualizar/:id", (request, response) -> pratoService.atualizarPrato(request, response));
+        delete("/prato/excluir/:id", (request, response) -> pratoService.excluirPrato(request, response)); 
     }
 }

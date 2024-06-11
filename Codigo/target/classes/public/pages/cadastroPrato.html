@@ -105,37 +105,35 @@
                                     <form>
                                         <label for="nPrato">Nome do Prato</label>
                                         <input type="text" id="nPrato" name="nPrato">
-
+                                    
                                         <label for="productName">Ingrediente</label>
-                                        <input type="text" id="productName" name="productName">
-                                        <div class="d-flex justify-content-end">
-                                        <button type="button" onclick="addIngredient()" class="btn bg-dark text-white d-flex">+</button>
-                                    </div>
-                                        <br>
-                                        <div id="ingredientList">
-                                            <!-- Ingredientes adicionados aparecerão aqui -->
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex">
+                                                <select id="productName" style="flex-grow: 1;" required>
+                                                    <option value="" disabled selected>Selecione um ingrediente</option>
+                                                </select>
+                                            </div>
+                                            <div class="d-flex flex-column align-items-center mt-2"> <!-- Alinha os botões verticalmente -->
+                                                <button type="button" onclick="addIngredient()" class="btn bg-dark text-white w-50 mb-4">+</button> <!-- Ajuste o tamanho do botão -->
+                                            </div>
                                         </div>
-
-                                        <div class="text-center">
-                                            <button id="btnSalvar" class="btn bg-dark text-white mt-3 w-50" type="button" onclick="salvarDados()">Salvar</button>
-                                        </div>
-                                        
-
                                     </form>
+                                    <div id="ingredientList"></div>
+                                    <div class="d-flex flex-column align-items-center mt-2">
+                                        <button id="btnSalvar" class="btn bg-dark text-white w-50 mt-4" type="button" onclick="salvarDados()">Cadastrar</button>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
-
 </body>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;700&family=Roboto:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap');
+
     html,
     body {
         height: 100%;
@@ -153,6 +151,13 @@
         display: block;
         border-radius: 5px;
         padding: 8px 5px;
+    }
+
+    select{
+        border-radius: 5px;
+        width: calc(100% - 42px);
+        height: 39px;
+        margin-bottom: 10px;
     }
 
     .mynav li a.active {
@@ -187,8 +192,6 @@
         margin-left: 20px;
         margin-bottom: 17px;
     }
-
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;700&family=Roboto:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap');
 
     * {
         margin: 0;
