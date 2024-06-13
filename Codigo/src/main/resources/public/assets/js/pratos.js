@@ -1,49 +1,93 @@
-function obterPratosDoServidor() {
-    return fetch('http://localhost:6789/prato/getAll')
+// Função para obter as receitas do servidor
+function obterReceitasDoServidor() {
+    return fetch('http://localhost:6789/receita/getAll')
         .then(response => response.json())
         .then(data => data);
 }
 
-
-function renderizarPratos(pratos) {
+// Função para renderizar as receitas na página HTML
+function renderizarReceitas(receitas) {
     const container = document.getElementById('employeeCardContainer');
-    container.innerHTML = ''; 
+    container.innerHTML = ''; // Limpa o conteúdo atual do contêiner
 
-    if (pratos.length === 0) {
+    if (receitas.length === 0) {
         const mensagem = document.createElement('p');
-        mensagem.textContent = 'Nenhum prato cadastrado';
+        mensagem.textContent = 'Nenhuma receita cadastrada';
         container.appendChild(mensagem);
     } else {
-        pratos.forEach(prato => {
+        // Objeto para agrupar receitas por nome do prato
+        const receitasAgrupadas = {};
+
+        receitas.forEach(receita => {
+            const nomePrato = receita.nomePrato;
+
+            if (!receitasAgrupadas[nomePrato]) {
+                receitasAgrupadas[nomePrato] = [];
+            }
+
+            receitasAgrupadas[nomePrato].push(receita);
+        });
+
+        // Itera sobre as receitas agrupadas e cria um card para cada grupo de receitas
+        Object.keys(receitasAgrupadas).forEach(nomePrato => {
+            const receitasDoPrato = receitasAgrupadas[nomePrato];
+
             const card = document.createElement('div');
             card.classList.add('employeeCard');
 
             const header = document.createElement('header');
-            header.textContent = prato.nome;
-
-            const ingredientes = document.createElement('p');
-            ingredientes.textContent = `Ingredientes: ${prato.ingredientes.join(', ')}`;
-
-            const quantidades = document.createElement('p');
-            quantidades.textContent = `Quantidades: ${prato.quantidades.join(', ')}`;
-
+            header.textContent = nomePrato;
             card.appendChild(header);
-            card.appendChild(ingredientes);
-            card.appendChild(quantidades);
 
+            const listaIngredientes = document.createElement('ul');
+            listaIngredientes.classList.add('ingredientes-list');
+
+            receitasDoPrato.forEach(receita => {
+                const itemLista = document.createElement('li');
+                itemLista.textContent = `${receita.nomeIngrediente} - Quantidade: ${receita.quantidadeIngrediente}`;
+                listaIngredientes.appendChild(itemLista);
+            });
+
+            card.appendChild(listaIngredientes);
             container.appendChild(card);
         });
     }
 }
 
-function carregarPratos() {
-    obterPratosDoServidor()
-        .then(pratos => {
-            renderizarPratos(pratos);
+// Função para filtrar as receitas com base no texto de pesquisa
+function filtrarReceitas() {
+    const input = document.getElementById('searchInput');
+    const filtro = input.value.toUpperCase();
+    const cards = document.getElementsByClassName('employeeCard');
+
+    Array.from(cards).forEach(card => {
+        const header = card.getElementsByTagName('header')[0];
+        const textoHeader = header.textContent.toUpperCase();
+
+        if (textoHeader.indexOf(filtro) > -1) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// Função principal para carregar as receitas ao carregar a página
+function carregarReceitas() {
+    obterReceitasDoServidor()
+        .then(receitas => {
+            renderizarReceitas(receitas);
         })
         .catch(error => {
-            console.error('Erro ao carregar os pratos:', error);
+            console.error('Erro ao carregar as receitas:', error);
         });
 }
 
-window.onload = carregarPratos;
+// Chamar a função principal ao carregar a página
+window.onload = function () {
+    carregarReceitas();
+
+    // Adicionar evento de clique ao botão de pesquisa
+    const searchButton = document.getElementById('searchButton');
+    searchButton.addEventListener('click', filtrarReceitas);
+};

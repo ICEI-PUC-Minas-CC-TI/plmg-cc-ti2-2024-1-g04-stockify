@@ -58,8 +58,8 @@
                     </a>
                 </li>
                 <li class="nav-item mb-1">
-                    <a href="cadastroPrato.html" class="" onclick="">
-                        Cadastro de Prato
+                    <a href="cadastroReceita.html" class="" onclick="">
+                        Cadastro de Receitas
                     </a>
                 </li>
                 <li class="nav-item mb-1">
@@ -94,10 +94,9 @@
                         <h1 class="text-center">Pratos Cadastrados</h1>
                         <div class="input-group mb-3">
                             <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nome ...">
-                            <button id="searchButton" class="btn bg-dark text-white" type="button">Pesquisar</button>
-                        </div>
-                        <div class="text-center">
-                            <a href="../pages/cadastroPrato.html"><button class="btn bg-dark text-white">Cadastrar</button></a>
+                            <button id="searchButton" class="btn btn-dark" type="button">
+                                <i class="fas fa-search text-white"></i> Pesquisar
+                            </button>
                         </div>
                     </div>
                     <div id="employeeCardContainer" class="d-flex flex-wrap justify-content-center"></div>
@@ -250,10 +249,39 @@ article h2{
 }
 
 #searchButton {
-    display: none;
+    width: 120px; /* largura desejada */
+    border-radius: 5px; /* bordas arredondadas */
+    margin-left: 10px; /* espaçamento à esquerda */
 }
 
+.employeeCard {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.employeeCard header {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.ingredientes-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ingredientes-list li {
+    margin-bottom: 5px;
+}
+
+.input-group .btn {
+    height: calc(100% - 2px); /* Ajusta a altura do botão para ser igual à altura do input */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
 </style>
 
 </html>

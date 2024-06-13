@@ -1,11 +1,10 @@
 var valorData, valorEvento;
 
 function coletarDados() {
-    // Obter o valor do input de data
-    valorData = document.getElementById('dataInput').value;
-    valorEvento = document.getElementById('eventoInput').value;
+    const dataInput = document.getElementById('data').value;
+    const eventoInput = document.getElementById('nome').value;
 
-    enviarParaAPI(valorEvento, valorData)
+    enviarParaAPI(dataInput, eventoInput);
 }
 
 function generateUUID() {
@@ -14,51 +13,58 @@ function generateUUID() {
           v = c === 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
-  }
+}
 
-function enviarParaAPI(evento, data) {
-    var dadosParaEnviar = {
-        id: generateUUID(),
-        title: evento,
-        start: data
+function enviarParaAPI(dataInput, eventoInput) {
+    const url = 'http://localhost:6789/evento/insere';
+
+    const dados = {
+        data: dataInput,
+        nome: eventoInput
     };
 
-    // URL da sua API
-    const apiUrl = 'https://jsonserver.samaranegabriel.repl.co/events';
+    console.log('Dados a serem enviados para a API:', dados);
 
-    // Opções da solicitação
-    var options = {
+    fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dadosParaEnviar),
-    };
+        body: JSON.stringify(dados)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro na solicitação da API: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Resposta da API:', data);
+        // Lógica adicional após receber resposta da API
+    })
+    .catch(error => {
+        console.error('Erro durante a solicitação da API:', error);
+    });
+}
 
-    // Fazer a solicitação usando fetch
-    fetch(apiUrl, options)
+
+function reloadEvents() {
+    getEvents().then(res => startCalendar(res));
+}
+
+function getEvents() {
+    const apiUrl = '/evento/getAll'; // Rota para buscar todos os eventos
+    return fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Erro na solicitação da API: ' + response.status);
+                throw new Error('Erro ao carregar eventos: ' + response.status);
             }
-            reloadEvents()
-            // return response.json();
+            return response.json();
         })
         .catch(error => {
-            console.error('Erro durante a solicitação da API:', error);
-            // Lidar com erros durante a solicitação
+            console.error('Erro ao carregar eventos:', error);
+            return []; // Retorna um array vazio em caso de erro
         });
-}
-
-
-function reloadEvents(){
-    getEvents().then(res => startCalendar(res))
-
-}
-function getEvents() {
-    return fetch('https://jsonserver.samaranegabriel.repl.co/events')
-        .then(response => response.json())
-        .catch(error => console.error('Erro ao carregar eventos:', error));
 }
 
 function startCalendar(data) {
@@ -73,17 +79,11 @@ function startCalendar(data) {
         },
         locale: 'pt-br',
         events: data
-    }
-    );
+    });
+
     calendar.render();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    getEvents().then(res => startCalendar(res))
+    getEvents().then(res => startCalendar(res));
 });
-
-
-
-
-
-
