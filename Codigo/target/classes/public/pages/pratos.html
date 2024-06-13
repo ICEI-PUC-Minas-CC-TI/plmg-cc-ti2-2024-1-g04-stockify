@@ -75,7 +75,7 @@
                     <h6 class="mt-1 mb-0" id="usernameDisplay"></h6>
                     <small class="" id="emailDisplay"></small>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16" onclick="logout()">
-                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
                         <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
                     </svg>
                 </span>
@@ -88,18 +88,24 @@
                 </a>
                 <span class="ms-3">Stockify</span>
             </div>
-            <div class="p-4">
-                <div id="content">
-                    <div class="form-container"> <!--ADICIONAR O CONTEÚDO DO HTML DENTRO DESSA DIV-->
-                        <h1 class="text-center">Pratos Cadastrados</h1>
-                        <div class="input-group mb-3">
-                            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nome ...">
-                            <button id="searchButton" class="btn btn-dark" type="button">
-                                <i class="fas fa-search text-white"></i> Pesquisar
-                            </button>
+            <div class="bg-light flex-fill">
+                <div class="p-4">
+                    <div id="content">
+                        <div class="form-container">
+                            <h1 class="text-center">Pratos Cadastrados</h1>
+                            <!-- Campo de busca e botão de pesquisa -->
+                            <div class="input-group mb-3">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nome ...">
+                                <button id="searchButton" class="btn btn-dark" type="button">
+                                    <i class="fas fa-search text-white"></i> Pesquisar
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Container onde os cards de pratos serão inseridos dinamicamente -->
+                        <div id="employeeCardContainer" class="d-flex flex-wrap justify-content-center">
+                            <!-- Aqui serão inseridos os cards dinamicamente -->
                         </div>
                     </div>
-                    <div id="employeeCardContainer" class="d-flex flex-wrap justify-content-center"></div>
                 </div>
             </div>
         </div>
@@ -108,7 +114,6 @@
     <script src="../assets/js/general.js"></script>
 </body>
 <style>
-    
 html,
 body {
   height: 100%;
@@ -150,138 +155,86 @@ body {
   border-radius: 2px;
 }
 
-#results{
+#results {
   display: inline-flex;
   border: 1px solid #ccc;
   padding: 10px;
 }
 
-svg{
+svg {
   margin-left: 20px;
   margin-bottom: 17px;
 }
 
 #employeeCardContainer {
-    display: flex;
-    margin: 20px;
-    flex-wrap: wrap;
-    justify-content: space-between; /* ou justify-content: flex-start; */
-    gap: 16px
+  display: flex;
+  margin: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .employeeCard {
-    padding: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    min-width: 300px; /* Defina o tamanho máximo desejado */
-    border: 1px solid #ccc; /* Adicione uma borda para separar visualmente os cards */
-    border-radius: 8px; /* Adicione bordas arredondadas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adicione uma sombra suave */
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  min-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-  
-.employeeCard header {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.form-container {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    border-radius: 10px;
-    width: 50%;
-  }
-
-input {
-    width: 100%;
-    outline: none;
-    padding: 5px 10px;
-    margin-bottom: 20px;
-    border: 1px solid #0f0e0e;
-    border-radius: 5px;
-  }
-
-button{
-    margin: 0px 15px 0px 15px;
-}
-
-article button{
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    border-radius: 5px;
-    border: 3px;
-    color: white;
-    background-color: #212529;
-    height: 38px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-article h2{
-    display: block;
-    margin-left: 80px;
-    margin-right: 80px;
-    text-transform: capitalize;
-}
-
-.employeeCard {
-  background-color: white; /* Define a cor de fundo branca */
-  border: 1px solid #ccc; /* Adiciona uma borda para melhor visualização */
-  padding: 15px; /* Espaçamento interno */
-  margin: 10px 0; /* Espaçamento entre os cards */
-  border-radius: 5px; /* Canto arredondado */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
-  cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
-}
-
-.employeeCard h3 {
-  margin-top: 0; /* Remove a margem superior do título */
-}
-
-.employeeCard p {
-  margin: 5px 0; /* Espaçamento entre os parágrafos */
-}
-
-#searchButton {
-    width: 120px; /* largura desejada */
-    border-radius: 5px; /* bordas arredondadas */
-    margin-left: 10px; /* espaçamento à esquerda */
-}
-
-.employeeCard {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.employeeCard:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .employeeCard header {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.ingredientes-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.ingredientes-list li {
-    margin-bottom: 5px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .input-group .btn {
-    height: calc(100% - 2px); /* Ajusta a altura do botão para ser igual à altura do input */
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+  height: calc(100% - 2px);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.ingredientes-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ingredientes-list li {
+  margin-bottom: 5px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.action-buttons input {
+  width: 60px;
+  margin-right: 10px;
+}
+
+button {
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: #212529;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+}
+
+button.btn-primary {
+  background-color: #0d6efd;
 }
 </style>
-
 </html>

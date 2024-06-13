@@ -93,16 +93,22 @@ public class ReceitaService {
         }
     }
 
-    public Object excluirReceita(Request request, Response response) {
-        int id = Integer.parseInt(request.params(":id"));
-
-        boolean sucesso = receitaDAO.excluirReceita(id);
+    public Object excluirReceitaPorNome(Request request, Response response) {
+        String nomePrato = request.queryParams("nomePrato");
+    
+        if (nomePrato == null || nomePrato.isEmpty()) {
+            response.status(400); // 400 Bad Request
+            return "Nome do prato não fornecido.";
+        }
+    
+        boolean sucesso = receitaDAO.excluirReceitasPorNome(nomePrato);
         if (sucesso) {
             response.status(200); // 200 OK
-            return "Receita excluída com sucesso.";
+            return "Receitas do prato excluídas com sucesso.";
         } else {
             response.status(500); // 500 Internal Server Error
-            return "Erro ao excluir a receita.";
+            return "Erro ao excluir as receitas do prato.";
         }
     }
+    
 }

@@ -49,6 +49,34 @@ function renderizarReceitas(receitas) {
             });
 
             card.appendChild(listaIngredientes);
+
+            // Adiciona inputs e botões de ações
+            const actionButtons = document.createElement('div');
+            actionButtons.classList.add('action-buttons');
+
+            const inputQuantidade = document.createElement('input');
+            inputQuantidade.type = 'number';
+            inputQuantidade.min = '1';
+            inputQuantidade.placeholder = 'Qtd';
+            actionButtons.appendChild(inputQuantidade);
+
+            const buttonVender = document.createElement('button');
+            buttonVender.textContent = 'Vender';
+            buttonVender.classList.add('btn', 'btn-primary');
+            buttonVender.onclick = () => {
+                const quantidade = inputQuantidade.value;
+                venderPrato(nomePrato, quantidade);
+            };
+            actionButtons.appendChild(buttonVender);
+
+            const buttonExcluir = document.createElement('button');
+            buttonExcluir.textContent = 'Excluir';
+            buttonExcluir.classList.add('btn', 'btn-danger');
+            buttonExcluir.onclick = () => excluirPrato(nomePrato);
+            actionButtons.appendChild(buttonExcluir);
+
+            card.appendChild(actionButtons);
+
             container.appendChild(card);
         });
     }
@@ -81,6 +109,55 @@ function carregarReceitas() {
         .catch(error => {
             console.error('Erro ao carregar as receitas:', error);
         });
+}
+
+// Função para vender um prato
+function venderPrato(nomePrato, quantidade) {
+    if (!quantidade || quantidade <= 0) {
+        alert('Por favor, insira uma quantidade válida.');
+        return;
+    }
+
+    if (confirm(`Tem certeza de que deseja vender ${quantidade} unidade(s) do prato "${nomePrato}"?`)) {
+        fetch(`http://localhost:6789/evento/vender`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `nomePrato=${encodeURIComponent(nomePrato)}&quantidade=${quantidade}`
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Venda registrada com sucesso.');
+                carregarReceitas(); // Atualiza a lista de receitas após a venda
+            } else {
+                alert('Erro ao registrar a venda.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao registrar a venda:', error);
+        });
+    }
+}
+
+// Função para excluir um prato
+function excluirPrato(nomePrato) {
+    if (confirm(`Tem certeza de que deseja excluir o prato "${nomePrato}"?`)) {
+        fetch(`http://localhost:6789/evento/excluir?nomePrato=${encodeURIComponent(nomePrato)}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Prato excluído com sucesso.');
+                carregarReceitas(); // Atualiza a lista de receitas após a exclusão
+            } else {
+                alert('Erro ao excluir o prato.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao excluir o prato:', error);
+        });
+    }
 }
 
 // Chamar a função principal ao carregar a página

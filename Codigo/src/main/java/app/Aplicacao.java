@@ -6,6 +6,7 @@ import service.UsuarioService;
 import service.FornecedorService;
 import service.ReceitaService;
 import service.EventoService;
+import service.VendaService;
 
 public class Aplicacao {
     
@@ -14,6 +15,7 @@ public class Aplicacao {
     private static FornecedorService fornecedorService = new FornecedorService();
     private static ReceitaService receitaService = new ReceitaService();
     private static EventoService eventoService = new EventoService();
+    private static VendaService vendaService = new VendaService();
 
     public static void main(String[] args) {
         port(6789);
@@ -56,7 +58,12 @@ public class Aplicacao {
         get("/receita/getAll", (request, response) -> receitaService.getAll(request, response));
         get("/receita/:id", (request, response) -> receitaService.getById(request, response));
         put("/receita/atualizar/:id", (request, response) -> receitaService.atualizarReceita(request, response));
-        delete("/receita/excluir/:id", (request, response) -> receitaService.excluirReceita(request, response));
+        delete("/evento/excluir", (request, response) -> receitaService.excluirReceitaPorNome(request, response));
+
+        //Rota Venda
+        post("/evento/vender", (request, response) -> vendaService.venderPrato(request, response));
+
+
 
         //Rotas Evento
         post("/evento/insere", (request, response) -> eventoService.criarEvento(request, response));

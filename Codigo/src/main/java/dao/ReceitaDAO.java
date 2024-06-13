@@ -139,4 +139,27 @@ public class ReceitaDAO extends DAO {
 
         return sucesso;
     }
+
+    public boolean excluirReceitasPorNome(String nomePrato) {
+        conectar();
+        String sql = "DELETE FROM receitas WHERE nome = ?";
+        boolean sucesso = false;
+
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, nomePrato);
+
+            int rowsDeleted = stmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("As receitas do prato foram excluídas com sucesso.");
+                sucesso = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao excluir as receitas do prato: " + e.getMessage());
+        } finally {
+            close();
+        }
+
+        return sucesso;
+    }
 }
