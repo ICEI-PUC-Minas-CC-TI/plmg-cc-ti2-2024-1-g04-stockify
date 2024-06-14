@@ -95,15 +95,14 @@
                 <span class="ms-3">Stockify</span>
             </div>
             <div class="p-4">
-                <div id="content"> <!--ADICIONAR O CONTEÚDO DO HTML DENTRO DESSA DIV-->
+                <div id="content">
                     <div class="container mt-4 mb-4">
                         <div class="row">
                             <div class="col">
-                                <input type="text" placeholder="Digite o nome do evento" class="form-control event"
-                                    id="eventoInput">
+                                <input type="text" placeholder="Digite o nome do evento" class="form-control event" id="nome">
                             </div>
                             <div class="col">
-                                <input type="date" class="form-control event" id="dataInput">
+                                <input type="date" class="form-control event" id="data">
                             </div>
                             <div class="col">
                                 <button class="btn btn-primary bg-dark" onclick="coletarDados()">Enviar</button>
@@ -113,13 +112,62 @@
                     <div id='calendar'></div>
                 </div>
             </div>
-
         </div>
+
+        <!-- Modal de Edição de Evento -->
+        <div class="modal fade" id="editarEventoModal" tabindex="-1" aria-labelledby="editarEventoModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarEventoModalLabel">Editar Evento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editarEventoForm">
+                            <div class="mb-3">
+                                <label for="editNomeEvento" class="form-label">Nome do Evento</label>
+                                <input type="text" class="form-control" id="editNomeEvento">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editDataEvento" class="form-label">Data do Evento</label>
+                                <input type="date" class="form-control" id="editDataEvento">
+                            </div>
+                            <input type="hidden" id="editEventoId">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger me-2" onclick="confirmarExclusao()">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick="salvarEdicaoEvento()">Salvar Alterações</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de Confirmação de Exclusão -->
+    <div class="modal fade" id="confirmarExclusaoModal" tabindex="-1" aria-labelledby="confirmarExclusaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmarExclusaoModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Deseja realmente excluir este evento?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="excluirEvento()">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     </div>
     <script src="../assets/js/calendario.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.1.1/build/global/luxon.min.js"></script>
 </body>
 
 <style>
@@ -228,6 +276,11 @@ html,body{
 .fc-daygrid-day-number{
     color: #222;
 }
+
+#calendar {
+    height: 810px;
+}
+
 
 </style>
 

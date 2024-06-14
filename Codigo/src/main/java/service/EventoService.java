@@ -1,9 +1,12 @@
 package service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dao.EventoDAO;
 import model.Evento;
 import spark.Request;
 import spark.Response;
+import utils.LocalDateAdapter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -11,51 +14,51 @@ import java.util.List;
 
 public class EventoService {
     private EventoDAO eventoDAO;
+    private Gson gson;
 
     public EventoService() {
         this.eventoDAO = new EventoDAO();
+
+        // Configuração do Gson com o adaptador LocalDateAdapter
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateAdapter());
+        this.gson = gsonBuilder.create();
     }
 
     public boolean criarEvento(Request request, Response response) {
         try {
-            String dataStr = request.queryParams("data");
-            String nomeEvento = request.queryParams("nomeEvento"); // Altere para "nome"
-    
+            Evento evento = gson.fromJson(request.body(), Evento.class);
             System.out.println("Dados recebidos para criar evento:");
-            System.out.println("Data: " + dataStr);
-            System.out.println("Nome do Evento: " + nomeEvento);
-    
-            if (dataStr == null || nomeEvento == null) {
+            System.out.println("Data: " + evento.getData());
+            System.out.println("Nome do Evento: " + evento.getNomeEvento());
+
+            if (evento.getData() == null || evento.getNomeEvento() == null) {
                 response.status(400); // Bad Request
                 return false;
             }
-    
-            LocalDate data = LocalDate.parse(dataStr);
-    
-            // Altere o construtor para usar "nome" em vez de "nomeEvento"
-            Evento evento = new Evento(data, nomeEvento);
+
             boolean inserido = eventoDAO.inserir(evento);
-    
             if (inserido) {
-                System.out.println("Evento inserido com sucesso.");
+                response.status(201); // Created
+                return true;
             } else {
-                System.err.println("Falha ao inserir o evento no banco de dados.");
+                response.status(500); // Internal Server Error
+                return false;
             }
-    
-            return inserido;
         } catch (DateTimeParseException e) {
-            System.err.println("Erro ao fazer parsing da data:");
-            e.printStackTrace(); // ou logar o erro
-    
             response.status(400); // Bad Request
             return false;
         }
-    }    
+    }
+
+    public List<Evento> listarEventos(Request request, Response response) {
+        List<Evento> eventos = eventoDAO.buscarTodos();
+        response.type("application/json");
+        return eventos;
+    }
 
     public Evento buscarEventoPorId(Request request, Response response) {
         int id = Integer.parseInt(request.params(":id"));
-        System.out.println("Buscando evento com ID: " + id);
-        
         Evento evento = eventoDAO.buscarPorId(id);
         if (evento != null) {
             response.type("application/json");
@@ -66,44 +69,39 @@ public class EventoService {
         }
     }
 
-    public List<Evento> listarEventos(Request request, Response response) {
-        System.out.println("Listando todos os eventos.");
-        
-        List<Evento> eventos = eventoDAO.buscarTodos();
-        response.type("application/json");
-        return eventos;
-    }
-
     public boolean atualizarEvento(Request request, Response response) {
-        int id = Integer.parseInt(request.params(":id"));
-        LocalDate novaData = LocalDate.parse(request.queryParams("novaData"));
-        String novoNomeEvento = request.queryParams("novoNomeEvento");
-        Evento evento = new Evento(id, novaData, novoNomeEvento);
-
-        System.out.println("Dados recebidos para atualizar evento:");
-        System.out.println("ID: " + id);
-        System.out.println("Nova Data: " + novaData);
-        System.out.println("Novo Nome do Evento: " + novoNomeEvento);
-        
-        boolean sucesso = eventoDAO.atualizar(evento);
-        if (sucesso) {
-            response.status(200); // OK
-        } else {
-            response.status(500); // Internal Server Error
+        try {
+            Evento evento = gson.fromJson(request.body(), Evento.class);
+            int id = Integer.parseInt(request.params(":id"));
+            evento.setId(id);
+            boolean sucesso = eventoDAO.atualizar(evento);
+            if (sucesso) {
+                response.status(200); // OK
+                return true;
+            } else {
+                response.status(500); // Internal Server Error
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            response.status(400); // Bad Request
+            return false;
         }
-        return sucesso;
     }
 
     public boolean excluirEvento(Request request, Response response) {
-        int id = Integer.parseInt(request.params(":id"));
-        System.out.println("Excluindo evento com ID: " + id);
-        
-        boolean sucesso = eventoDAO.excluir(id);
-        if (sucesso) {
-            response.status(200); // OK
-        } else {
-            response.status(500); // Internal Server Error
+        try {
+            int id = Integer.parseInt(request.params(":id"));
+            boolean sucesso = eventoDAO.excluir(id);
+            if (sucesso) {
+                response.status(200); // OK
+                return true;
+            } else {
+                response.status(500); // Internal Server Error
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            response.status(400); // Bad Request
+            return false;
         }
-        return sucesso;
     }
 }

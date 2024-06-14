@@ -1,12 +1,21 @@
 package app;
 
 import static spark.Spark.*;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import service.ProdutoService;
 import service.UsuarioService;
 import service.FornecedorService;
 import service.ReceitaService;
 import service.EventoService;
 import service.VendaService;
+import utils.LocalDateAdapter;
+import model.Evento;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class Aplicacao {
     
@@ -16,10 +25,16 @@ public class Aplicacao {
     private static ReceitaService receitaService = new ReceitaService();
     private static EventoService eventoService = new EventoService();
     private static VendaService vendaService = new VendaService();
+    private static Gson gson = new Gson();
 
     public static void main(String[] args) {
         port(6789);
         
+        gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
+
+
         staticFiles.location("/public");
 
         // Rota para servir o arquivo form.html como página inicial
@@ -63,13 +78,35 @@ public class Aplicacao {
         //Rota Venda
         post("/evento/vender", (request, response) -> vendaService.venderPrato(request, response));
 
+        // Rotas Evento
+        post("/evento/insere", (request, response) -> {
+            boolean sucesso = eventoService.criarEvento(request, response);
+            response.type("application/json");
+            return gson.toJson(sucesso ? "Evento criado com sucesso" : "Falha ao criar evento");
+        });
 
+        get("/evento/getAll", (request, response) -> {
+            List<Evento> eventos = eventoService.listarEventos(request, response);
+            response.type("application/json");
+            return gson.toJson(eventos);
+        });
 
-        //Rotas Evento
-        post("/evento/insere", (request, response) -> eventoService.criarEvento(request, response));
-        get("/evento/getAll", (request, response) -> eventoService.listarEventos(request, response));
-        get("/evento/:id", (request, response) -> eventoService.buscarEventoPorId(request, response));
-        put("/evento/atualizar/:id", (request, response) -> eventoService.atualizarEvento(request, response));
-        delete("/evento/excluir/:id", (request, response) -> eventoService.excluirEvento(request, response));
+        get("/evento/:id", (request, response) -> {
+            Evento evento = eventoService.buscarEventoPorId(request, response);
+            response.type("application/json");
+            return gson.toJson(evento != null ? evento : "Evento não encontrado");
+        });
+
+        put("/evento/atualizar/:id", (request, response) -> {
+            boolean sucesso = eventoService.atualizarEvento(request, response);
+            response.type("application/json");
+            return gson.toJson(sucesso ? "Evento atualizado com sucesso" : "Falha ao atualizar evento");
+        });
+
+        delete("/evento/excluir/:id", (request, response) -> {
+            boolean sucesso = eventoService.excluirEvento(request, response);
+            response.type("application/json");
+            return gson.toJson(sucesso ? "Evento excluído com sucesso" : "Falha ao excluir evento");
+        });
     }
 }

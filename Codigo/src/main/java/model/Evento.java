@@ -7,17 +7,20 @@ public class Evento {
     private LocalDate data;
     private String nomeEvento;
 
+    // Construtor para criação de novos eventos (sem ID)
     public Evento(LocalDate data, String nomeEvento) {
         this.data = data;
         this.nomeEvento = nomeEvento;
     }
 
+    // Construtor para eventos existentes (com ID)
     public Evento(int id, LocalDate data, String nomeEvento) {
         this.id = id;
         this.data = data;
         this.nomeEvento = nomeEvento;
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }
