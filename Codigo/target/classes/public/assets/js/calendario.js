@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'dayGridMonth'
         },
         events: function(fetchInfo, successCallback, failureCallback) {
             fetch('http://localhost:6789/evento/getAll')
@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
 function coletarDados() {
     const dataInput = document.getElementById('data').value;
     const eventoInput = document.getElementById('nome').value;
+
+    // Validação da data
+    const dataAtual = luxon.DateTime.now().toISODate();
+    if (dataInput < dataAtual) {
+        alert('A data do evento não pode ser anterior à data atual.');
+        return;
+    }
 
     enviarParaAPI(dataInput, eventoInput);
 }
@@ -80,6 +87,13 @@ function abrirModalEdicao(evento) {
     document.getElementById('editNomeEvento').value = evento.title;
     document.getElementById('editDataEvento').value = evento.startStr;
 
+    // Validação da data ao abrir o modal de edição
+    const dataAtual = luxon.DateTime.now().toISODate();
+    if (evento.startStr < dataAtual) {
+        alert('Não é possível editar um evento com data anterior à data atual.');
+        return;
+    }
+
     // Armazena o ID do evento em um campo oculto
     document.getElementById('editEventoId').value = evento.id;
 
@@ -92,6 +106,13 @@ function salvarEdicaoEvento() {
     const idEvento = document.getElementById('editEventoId').value;
     const nomeEvento = document.getElementById('editNomeEvento').value;
     const dataEvento = document.getElementById('editDataEvento').value;
+
+    // Validação da data
+    const dataAtual = luxon.DateTime.now().toISODate();
+    if (dataEvento < dataAtual) {
+        alert('Não é possível editar o evento com uma data anterior à data atual.');
+        return;
+    }
 
     const url = `http://localhost:6789/evento/atualizar/${idEvento}`;
 
