@@ -1,10 +1,11 @@
-// Função cadastra funcionário
+// Função cadastra fornecedor
 function cadastraFornecedor(event) {
   event.preventDefault();
+  
   const formData = {
     nome: document.getElementById('fornecedor').value,
     categoria: document.getElementById('categoria').value,
-    celular: document.getElementById('celular').value,
+    celular: formatarCelular(document.getElementById('celular').value),
     endereco: document.getElementById('endereco').value
   };
 
@@ -29,6 +30,25 @@ function cadastraFornecedor(event) {
     .catch((error) => {
       console.error('Erro:', error);
     });
+}
+
+// Função para formatar o número de celular
+function formatarCelular(celular) {
+  // Remove todos os caracteres não numéricos do número de celular
+  const celularNumerico = celular.replace(/\D/g, '');
+
+  // Verifica se o número de celular possui no máximo 9 dígitos
+  if (celularNumerico.length > 9) {
+    alert('O número de celular não pode ter mais que 9 dígitos.');
+    return ''; // Retorna uma string vazia se houver erro
+  }
+
+  // Formatação para um formato específico, como DDD + número
+  // Exemplo: adicionando DDD 99 ao número 123456789
+  const ddd = '99'; // Substituir pelo DDD desejado
+  const numeroFormatado = `${ddd}${celularNumerico}`;
+
+  return numeroFormatado;
 }
 
 document.addEventListener('DOMContentLoaded', function() {

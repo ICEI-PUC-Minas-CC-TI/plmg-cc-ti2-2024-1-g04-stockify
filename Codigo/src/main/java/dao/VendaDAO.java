@@ -68,17 +68,15 @@ public class VendaDAO extends DAO {
             int quantidadeDescontar = quantidadeIngrediente * quantidadeVendida;
     
             // Debug: Exibir informações antes de executar o SQL
-            System.out.println("Nome Ingrediente: " + nomeIngrediente);
-            System.out.println("Quantidade a descontar: " + quantidadeDescontar);
-    
+            
             // Preparar e executar o SQL para atualizar o estoque deste ingrediente
             String sql = "UPDATE produto SET quantidade = quantidade - ? WHERE nome = ?";
-    
+            
             try {
                 PreparedStatement stmt = conexao.prepareStatement(sql);
                 stmt.setInt(1, quantidadeDescontar);
                 stmt.setString(2, nomeIngrediente);
-    
+                
                 int rowsUpdated = stmt.executeUpdate();
                 if (rowsUpdated == 0) {
                     sucesso = false;
@@ -87,6 +85,9 @@ public class VendaDAO extends DAO {
                 System.out.println("Erro ao atualizar o estoque para o ingrediente " + nomeIngrediente + ": " + e.getMessage());
                 sucesso = false;
             }
+            
+            System.out.println("Nome Ingrediente: " + nomeIngrediente);
+            System.out.println("Quantidade a descontar: " + quantidadeDescontar);
         }
     
         close();

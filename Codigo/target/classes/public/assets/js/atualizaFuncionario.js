@@ -24,14 +24,15 @@ async function carregarDadosUsuario(userId) {
             throw new Error('Erro ao carregar dados do usuário');
         }
         const usuario = await response.json();
-        document.getElementById('username').value = usuario.username; // Supondo que o campo 'nome' seja preenchido
+        document.getElementById('username').value = usuario.username;
         document.getElementById('email').value = usuario.email;
         document.getElementById('senha').value = usuario.senha;
         document.getElementById('idade').value = usuario.idade;
         document.getElementById('cpf').value = usuario.cpf;
-        document.getElementById('salario').value = usuario.salario; // Senha deve ser preenchida manualmente
+        document.getElementById('salario').value = usuario.salario;
     } catch (error) {
         console.error('Erro ao carregar dados do usuário:', error);
+        alert('Erro ao carregar dados do usuário. Por favor, tente novamente.');
     }
 }
 

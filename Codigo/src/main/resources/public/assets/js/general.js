@@ -26,24 +26,65 @@ function login() {
         }
     })
     .then(data => {
-        // Se o login for bem-sucedido, armazenar token e outras informações relevantes
+        // Se o login for bem-sucedido, buscar informações adicionais do usuário
         if (data) {
             alert('Login bem-sucedido!');
-            window.location.href = 'homepage.html';
+
+            // Fazer outra chamada para obter as informações do usuário
+            return fetch('http://localhost:6789/funcionarios/getAll', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         } else {
             console.log("Deu algum erro");
         }
     })
+    .then(response => response.json())
+    .then(userData => {
+        // Encontrar o usuário logado na lista de funcionários
+        const user = userData.find(user => user.email === email);
+        if (user) {
+            localStorage.setItem('username', user.username);
+            localStorage.setItem('email', user.email);
+            window.location.href = 'homepage.html';
+        } else {
+            throw new Error('Usuário não encontrado.');
+        }
+    })
     .catch(error => {
-        // Se ocorrer um erro durante o login
+        // Se ocorrer um erro durante o login ou busca de informações
         alert('Erro ao fazer login: ' + error.message);
     });
 }
-
-
 
 function logout() {
     localStorage.clear();
     window.location.href = '../index.html';
     console.log("LOCALSTORAGE LIMPO");
 }
+
+// Função para exibir informações do usuário
+function displayUserInfo() {
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    const emailDisplay = document.getElementById('emailDisplay');
+
+    const username = localStorage.getItem('username');
+    const email = localStorage.getItem('email');
+
+    console.log('Username from localStorage:', username);  // Log de depuração
+    console.log('Email from localStorage:', email);        // Log de depuração
+
+    if (username) {
+        usernameDisplay.textContent = username;
+    }
+
+    if (email) {
+        emailDisplay.textContent = email;
+    }
+}
+
+// Chame a função para exibir as informações do usuário quando a página carregar
+document.addEventListener('DOMContentLoaded', displayUserInfo);
+
