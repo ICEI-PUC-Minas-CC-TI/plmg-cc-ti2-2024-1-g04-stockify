@@ -10,7 +10,6 @@ async function createItem(item) {
 
         if (response.ok) {
             const data = await response.json();
-            console.log('Sucesso:', data);
             alert("Feito com sucesso");
             // Redirecionar para a página de estoque após sucesso
             window.location.href = 'alimentos.html'; // Certifique-se de que o caminho está correto
@@ -67,8 +66,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             lote: sLote.value,
             datavalidade: sData.value
         };
-
-        console.log(JSON.stringify(item));
 
         await createItem(item);
 

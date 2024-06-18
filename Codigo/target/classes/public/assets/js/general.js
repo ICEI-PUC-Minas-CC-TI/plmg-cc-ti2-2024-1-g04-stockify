@@ -8,8 +8,6 @@ function login() {
         senha: senha
     };
 
-    console.log(credenciais);
-
     // Enviar as credenciais para o endpoint de login no seu backend
     fetch('http://localhost:6789/login/procura', {
         method: 'PUT',
@@ -62,7 +60,6 @@ function login() {
 function logout() {
     localStorage.clear();
     window.location.href = '../index.html';
-    console.log("LOCALSTORAGE LIMPO");
 }
 
 // Função para exibir informações do usuário
@@ -72,9 +69,6 @@ function displayUserInfo() {
 
     const username = localStorage.getItem('username');
     const email = localStorage.getItem('email');
-
-    console.log('Username from localStorage:', username);  // Log de depuração
-    console.log('Email from localStorage:', email);        // Log de depuração
 
     if (username) {
         usernameDisplay.textContent = username;

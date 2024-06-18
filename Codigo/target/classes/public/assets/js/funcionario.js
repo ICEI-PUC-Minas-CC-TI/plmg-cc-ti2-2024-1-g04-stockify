@@ -64,7 +64,6 @@ function displayResults(funcionarios) {
           employeeCardContainer.appendChild(employeeCard);
       });
   } else {
-      console.log('Nenhum funcionário encontrado.');
       employeeCardContainer.innerHTML = '<p>Nenhum funcionário cadastrado.</p>';
   }
 }

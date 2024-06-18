@@ -62,7 +62,6 @@ function displayResults(resultados) {
             });
         });
     } else {
-        console.log('Nenhum resultado encontrado.');
         tableClientBody.innerHTML = '<tr><td colspan="4">Nenhum Fornecedor cadastrado.</td></tr>';
         tableClientBody.style.pointerEvents = 'none'; // Desativa o evento de clique na tabela
         tableClientBody.style.cursor = 'default'; // Altera o cursor para o padrão
@@ -78,6 +77,5 @@ document.querySelector('#tableClient>tbody').addEventListener('click', (event) =
     if (row) {
         const fornecedorId = row.dataset.id; // Esta linha imprime o ID do fornecedor no console
         window.location.href = `editarFornecedor.html?id=${fornecedorId}`;
-        console.log("ID do fornecedor:", fornecedorId);
     }
 });

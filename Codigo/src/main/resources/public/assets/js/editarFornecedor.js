@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fornecedorId = urlParams.get('id');
 
     if (fornecedorId) {
-        console.log('ID do fornecedor:', fornecedorId); // Imprime o ID do fornecedor no console
         try {
             const fornecedor = await fetchFornecedorById(fornecedorId);
             preencherCamposDeEdicao(fornecedor);

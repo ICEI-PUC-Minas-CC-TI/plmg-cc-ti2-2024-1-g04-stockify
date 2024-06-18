@@ -32,7 +32,6 @@ function cadastraFuncionario(event) {
       salario: salarioElement.value,
     };
     
-    console.log(formData);
 
     fetch('/login/insere', {
       method: 'POST',
@@ -43,7 +42,6 @@ function cadastraFuncionario(event) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Sucesso:', data);
         alert('Funcionário cadastrado com sucesso!');
         // Redireciona para a página funcionario.html após o cadastro
         window.location.href = 'funcionarios.html';

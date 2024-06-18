@@ -56,8 +56,6 @@ function enviarParaAPI(dataInput, eventoInput) {
         nomeEvento: eventoInput
     };
 
-    console.log('Dados a serem enviados para a API:', dados);
-
     fetch(url, {
         method: 'POST',
         headers: {
@@ -72,7 +70,6 @@ function enviarParaAPI(dataInput, eventoInput) {
         return response.json();
     })
     .then(data => {
-        console.log('Resposta da API:', data);
         alert('Evento criado com sucesso!');
         location.reload(); // Recarrega a página para atualizar o calendário
     })
@@ -121,8 +118,6 @@ function salvarEdicaoEvento() {
         data: dataEvento
     };
 
-    console.log('Dados a serem enviados para a API:', dados);
-
     fetch(url, {
         method: 'PUT',
         headers: {
@@ -137,7 +132,6 @@ function salvarEdicaoEvento() {
         return response.json();
     })
     .then(data => {
-        console.log('Resposta da API:', data);
         alert('Evento editado com sucesso!');
         location.reload(); // Recarrega a página para atualizar o calendário
     })
@@ -171,7 +165,6 @@ function excluirEvento() {
         return response.json();
     })
     .then(data => {
-        console.log('Resposta da API:', data);
         alert('Evento excluído com sucesso!');
         location.reload(); // Recarrega a página para atualizar o calendário
     })

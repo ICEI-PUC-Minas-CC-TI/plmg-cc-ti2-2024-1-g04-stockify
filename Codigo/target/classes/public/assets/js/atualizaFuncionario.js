@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    console.log("ID do usuário recebido:", userId);
-
     if (userId) {
         await carregarDadosUsuario(userId);
     }

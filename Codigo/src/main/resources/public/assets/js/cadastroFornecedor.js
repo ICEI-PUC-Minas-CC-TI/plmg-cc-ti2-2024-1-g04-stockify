@@ -24,7 +24,6 @@ function cadastraFornecedor(event) {
     })
     .then(data => {
       alert("FORNECEDOR CADASTRADO COM SUCESSO");
-      console.log('Sucesso:', data);
       window.location.href = 'fornecedor.html';
     })
     .catch((error) => {

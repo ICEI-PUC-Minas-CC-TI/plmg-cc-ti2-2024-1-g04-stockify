@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const produtoId = urlParams.get('id');
 
     if (produtoId) {
-        console.log('ID do produto:', produtoId); // Imprime o ID do produto no console
         try {
             const produto = await fetchProdutoById(produtoId);
             await preencherOpcoesFornecedor(produto.fornecedor); // Preenche as opções do campo de fornecedor e seleciona o atual
