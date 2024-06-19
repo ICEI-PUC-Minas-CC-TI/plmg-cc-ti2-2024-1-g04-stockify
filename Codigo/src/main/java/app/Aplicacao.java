@@ -5,6 +5,7 @@ import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dao.VendaDAO;
 import service.ProdutoService;
 import service.UsuarioService;
 import service.FornecedorService;
@@ -13,18 +14,21 @@ import service.EventoService;
 import service.VendaService;
 import utils.LocalDateAdapter;
 import model.Evento;
+import prediction.PredictionService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class Aplicacao {
-    
+
     private static ProdutoService produtoService = new ProdutoService();
     private static UsuarioService usuarioService = new UsuarioService(); 
     private static FornecedorService fornecedorService = new FornecedorService();
     private static ReceitaService receitaService = new ReceitaService();
     private static EventoService eventoService = new EventoService();
     private static VendaService vendaService = new VendaService();
+    private static PredictionService predictionService;
     private static Gson gson = new Gson();
 
     public static void main(String[] args) {
@@ -33,7 +37,6 @@ public class Aplicacao {
         gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .create();
-
 
         staticFiles.location("/public");
 
@@ -108,5 +111,19 @@ public class Aplicacao {
             response.type("application/json");
             return gson.toJson(sucesso ? "Evento excluído com sucesso" : "Falha ao excluir evento");
         });
+
+        // Rota para atualizar a predição
+        get("/atualizarPredicao", (request, response) -> {
+            predictionService.verificarEstoqueECriarEventos();
+            response.status(200);
+            return "";
+        });
+
+        // Criação do PredictionService
+        VendaDAO vendaDAO = new VendaDAO();
+        predictionService = new PredictionService(vendaDAO, produtoService, eventoService);
+
+        // Verificação de estoque e criação de eventos
+        predictionService.verificarEstoqueECriarEventos();
     }
 }

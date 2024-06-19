@@ -11,10 +11,12 @@ public class VendaService {
 
     private final VendaDAO vendaDAO;
 
+    // Construtor padrão sem argumentos
     public VendaService() {
         this.vendaDAO = new VendaDAO();
     }
     
+    // Construtor opcional para injeção de dependência
     public VendaService(VendaDAO vendaDAO) {
         this.vendaDAO = vendaDAO;
     }

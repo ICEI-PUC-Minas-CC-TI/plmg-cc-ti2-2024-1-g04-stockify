@@ -16,8 +16,16 @@ public class ReceitaDAO extends DAO {
 
     public boolean inserirReceita(Receita receita) {
         conectar();
-        String sql = "INSERT INTO receitas (nome, ingrediente, quantidade) VALUES (?, ?, ?)";
         boolean sucesso = false;
+
+        // Verificar se há estoque suficiente para inserir a nova receita
+        boolean estoqueSuficiente = verificarEstoqueSuficienteParaInserir(receita);
+        if (!estoqueSuficiente) {
+            System.out.println("Erro: Estoque insuficiente para inserir a receita.");
+            return false;
+        }
+
+        String sql = "INSERT INTO receitas (nome, ingrediente, quantidade) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -93,8 +101,16 @@ public class ReceitaDAO extends DAO {
 
     public boolean atualizarReceita(Receita receita, int id) {
         conectar();
-        String sql = "UPDATE receitas SET nome = ?, ingrediente = ?, quantidade = ? WHERE id = ?";
         boolean sucesso = false;
+
+        // Verificar se há estoque suficiente para atualizar a receita
+        boolean estoqueSuficiente = verificarEstoqueSuficienteParaAtualizar(receita, id);
+        if (!estoqueSuficiente) {
+            System.out.println("Erro: Estoque insuficiente para atualizar a receita.");
+            return false;
+        }
+
+        String sql = "UPDATE receitas SET nome = ?, ingrediente = ?, quantidade = ? WHERE id = ?";
 
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -161,5 +177,85 @@ public class ReceitaDAO extends DAO {
         }
 
         return sucesso;
+    }
+
+    private boolean verificarEstoqueSuficienteParaInserir(Receita receita) {
+        int quantidadeNecessaria = receita.getQuantidadeIngrediente();
+        int estoqueAtual = consultarEstoque(receita.getNomeIngrediente());
+
+        return estoqueAtual >= quantidadeNecessaria;
+    }
+
+    private boolean verificarEstoqueSuficienteParaAtualizar(Receita receita, int id) {
+        int quantidadeNecessaria = receita.getQuantidadeIngrediente();
+        int estoqueAtual = consultarEstoque(receita.getNomeIngrediente(), id);
+
+        return estoqueAtual >= quantidadeNecessaria;
+    }
+
+    private int consultarEstoque(String nomeProduto) {
+        int estoqueAtual = 0;
+        String sql = "SELECT quantidade FROM produto WHERE nome = ?";
+
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, nomeProduto);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                estoqueAtual = rs.getInt("quantidade");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao consultar o estoque: " + e.getMessage());
+        }
+
+        return estoqueAtual;
+    }
+
+    private int consultarEstoque(String nomeProduto, int id) {
+        int estoqueAtual = 0;
+        String sql = "SELECT quantidade FROM produto WHERE nome = ? AND id != ?";
+
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, nomeProduto);
+            stmt.setInt(2, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                estoqueAtual = rs.getInt("quantidade");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao consultar o estoque: " + e.getMessage());
+        }
+
+        return estoqueAtual;
+    }
+
+    public List<Receita> getReceitasPorNome(String nomePrato) {
+        conectar();
+        List<Receita> receitas = new ArrayList<>();
+        String sql = "SELECT nome, ingrediente, quantidade FROM receitas WHERE nome = ?";
+
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, nomePrato);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String nome = rs.getString("nome");
+                String nomeIngrediente = rs.getString("ingrediente");
+                int quantidade = rs.getInt("quantidade");
+
+                Receita receita = new Receita(nome, nomeIngrediente, quantidade);
+                receitas.add(receita);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar as receitas pelo nome do prato: " + e.getMessage());
+        } finally {
+            close();
+        }
+
+        return receitas;
     }
 }

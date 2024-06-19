@@ -1,7 +1,9 @@
 package service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 import com.google.gson.Gson;
 import model.Produto;
 import dao.ProdutoDAO;
@@ -74,5 +76,16 @@ public class ProdutoService {
         List<String> fornecedores = produtoDAO.getAllFornecedores();
         Gson gson = new Gson();
         return gson.toJson(fornecedores);
+    }
+
+    public Map<String, Integer> getCurrentStock() {
+        List<Produto> produtos = produtoDAO.getAll();
+        Map<String, Integer> currentStock = new HashMap<>();
+
+        for (Produto produto : produtos) {
+            currentStock.put(produto.getNome(), produto.getQuantidade());
+        }
+
+        return currentStock;
     }
 }

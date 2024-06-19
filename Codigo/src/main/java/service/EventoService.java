@@ -25,6 +25,15 @@ public class EventoService {
         this.gson = gsonBuilder.create();
     }
 
+    public boolean criarEvento(Evento evento) {
+        if (evento.getData() == null || evento.getNomeEvento() == null) {
+            return false;
+        }
+
+        boolean inserido = eventoDAO.inserir(evento);
+        return inserido;
+    }
+
     public boolean criarEvento(Request request, Response response) {
         try {
             Evento evento = gson.fromJson(request.body(), Evento.class);
@@ -103,5 +112,21 @@ public class EventoService {
             response.status(400); // Bad Request
             return false;
         }
+    }
+
+    public List<Evento> listarEventosPorData(LocalDate data) {
+        return eventoDAO.buscarPorData(data);
+    }
+
+    public Evento buscarPorDataENome(LocalDate data, String nome) {
+        return eventoDAO.buscarPorDataENome(data, nome);
+    }
+
+    public boolean excluirEventoPorDataENome(LocalDate data, String nome) {
+        Evento evento = eventoDAO.buscarPorDataENome(data, nome);
+        if (evento != null) {
+            return eventoDAO.excluir(evento.getId());
+        }
+        return false;
     }
 }

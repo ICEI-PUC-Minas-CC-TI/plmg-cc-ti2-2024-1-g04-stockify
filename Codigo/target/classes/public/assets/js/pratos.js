@@ -131,7 +131,7 @@ function venderPrato(nomePrato, quantidade) {
                 alert('Venda registrada com sucesso.');
                 carregarReceitas(); // Atualiza a lista de receitas após a venda
             } else {
-                alert('Erro ao registrar a venda.');
+                alert('Erro ao registrar a venda produto em falta no estoque.');
             }
         })
         .catch(error => {

@@ -84,6 +84,49 @@ public class EventoDAO extends DAO {
         return eventos;
     }
 
+    // Método para buscar eventos por data
+    public List<Evento> buscarPorData(LocalDate data) {
+        List<Evento> eventos = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM evento WHERE data = ?";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setDate(1, java.sql.Date.valueOf(data));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Evento evento = new Evento(
+                        rs.getInt("id"),
+                        rs.getDate("data").toLocalDate(),
+                        rs.getString("nome")
+                );
+                eventos.add(evento);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return eventos;
+    }
+
+    // Método para buscar eventos por data e nome
+    public Evento buscarPorDataENome(LocalDate data, String nome) {
+        try {
+            String sql = "SELECT * FROM evento WHERE data = ? AND nome = ?";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setDate(1, java.sql.Date.valueOf(data));
+            stmt.setString(2, nome);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Evento(
+                        rs.getInt("id"),
+                        rs.getDate("data").toLocalDate(),
+                        rs.getString("nome")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // Método para atualizar um evento
     public boolean atualizar(Evento evento) {
         try {
