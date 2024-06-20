@@ -1,10 +1,11 @@
 package prediction;
 
+import dao.VendaDAO;
+import model.Venda;
+
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import dao.VendaDAO;
-import model.Venda;
 
 public class PredictionModel {
     private VendaDAO vendaDAO;
@@ -46,21 +47,31 @@ public class PredictionModel {
     public Map<String, Integer> estimateDaysUntilStockOut(Map<String, Integer> currentStock) {
         Map<String, Map<String, Double>> averageConsumption = calculateAverageConsumptionPerDayOfWeek();
         Map<String, Integer> daysUntilStockOut = new HashMap<>();
-
+    
         for (String produto : currentStock.keySet()) {
             int estoqueAtual = currentStock.get(produto);
             double consumoDiarioMedio = 0.0;
-
-            for (String diaSemana : averageConsumption.get(produto).keySet()) {
-                consumoDiarioMedio += averageConsumption.get(produto).get(diaSemana);
+    
+            // Verifica se há consumo médio calculado para este produto
+            if (averageConsumption.containsKey(produto)) {
+                Map<String, Double> consumoPorDia = averageConsumption.get(produto);
+    
+                for (String diaSemana : consumoPorDia.keySet()) {
+                    consumoDiarioMedio += consumoPorDia.get(diaSemana);
+                }
+    
+                consumoDiarioMedio /= 7; // Média diária
+    
+                int diasRestantes = (int) Math.ceil(estoqueAtual / consumoDiarioMedio);
+                daysUntilStockOut.put(produto, diasRestantes);
+            } else {
+                // Caso não haja consumo médio calculado, pode ser necessário lidar com essa situação
+                // Aqui você pode decidir como tratar essa condição, por exemplo, colocando um valor padrão
+                // ou lançando uma exceção, dependendo da lógica do seu sistema.
+                daysUntilStockOut.put(produto, -1); // Exemplo: definir -1 para indicar ausência de dados
             }
-
-            consumoDiarioMedio /= 7;
-
-            int diasRestantes = (int) Math.ceil(estoqueAtual / consumoDiarioMedio);
-            daysUntilStockOut.put(produto, diasRestantes);
         }
-
+    
         return daysUntilStockOut;
     }
 }
