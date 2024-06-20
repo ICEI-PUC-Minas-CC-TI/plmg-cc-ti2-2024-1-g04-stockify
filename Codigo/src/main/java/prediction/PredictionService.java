@@ -31,31 +31,29 @@ public class PredictionService {
         Map<String, Integer> currentStock = produtoService.getCurrentStock();
         Map<String, Integer> previsao = getDaysUntilStockOut(currentStock);
         LocalDate today = LocalDate.now();
-
+    
         for (String produto : previsao.keySet()) {
             int diasRestantes = previsao.get(produto);
-            if (diasRestantes <= 7) { // Por exemplo, se restarem 7 dias ou menos
-                String nomeEvento = "Reabastecer Estoque de " + produto; // Nome do evento com o nome do produto
-
-                // Verificar se já existe um evento com o mesmo nome na data de hoje
+            int estoqueAtual = currentStock.getOrDefault(produto, 0); // Garante que o estoque atual seja inicializado corretamente
+    
+            if (estoqueAtual <= 25) { // Verifica se o estoque está abaixo ou igual a 25
+                String nomeEvento = "Reabastecer Estoque de " + produto;
+    
                 Evento eventoExistente = eventoService.buscarPorDataENome(today, nomeEvento);
                 if (eventoExistente == null) {
                     Evento evento = new Evento(today, nomeEvento);
-                    // Criar evento
                     eventoService.criarEvento(evento);
                 }
             } else {
-                // Verificar se existe um evento de reabastecimento para este produto na data de hoje
                 Evento eventoExistente = eventoService.buscarPorDataENome(today, "Reabastecer Estoque de " + produto);
                 if (eventoExistente != null) {
-                    // Remover evento (opcional, se necessário)
                     eventoService.excluirEventoPorDataENome(today, "Reabastecer Estoque de " + produto);
                 }
             }
-
+    
             if (diasRestantes <= 3) {
-                System.out.println("Alerta: O estoque do produto " + produto + " está acabando!");
+                System.out.println("Alerta: O estoque do produto " + produto + " acabou!");
             }
         }
     }
-}
+}    
