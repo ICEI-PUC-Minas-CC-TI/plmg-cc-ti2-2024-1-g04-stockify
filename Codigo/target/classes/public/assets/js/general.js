@@ -38,7 +38,7 @@ function login() {
     .then(response => response.json())
     .then(userData => {
         const user = userData.find(user => user.email === email);
-        if (user) {a
+        if (user) {
             localStorage.setItem('username', user.username);
             localStorage.setItem('email', user.email);
             window.location.href = 'homepage.html';
@@ -63,12 +63,16 @@ function displayUserInfo() {
     const username = localStorage.getItem('username');
     const email = localStorage.getItem('email');
 
-    if (username) {
-        usernameDisplay.textContent = username;
-    }
+    if (usernameDisplay && emailDisplay) {
+        if (username) {
+            usernameDisplay.textContent = username;
+        }
 
-    if (email) {
-        emailDisplay.textContent = email;
+        if (email) {
+            emailDisplay.textContent = email;
+        }
+    } else {
+        console.error('Elementos usernameDisplay ou emailDisplay não encontrados.');
     }
 }
 
