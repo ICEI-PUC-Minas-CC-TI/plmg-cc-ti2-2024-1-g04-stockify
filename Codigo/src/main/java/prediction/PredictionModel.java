@@ -55,7 +55,7 @@ public class PredictionModel {
                 consumoDiarioMedio += averageConsumption.get(produto).get(diaSemana);
             }
 
-            consumoDiarioMedio /= 7; // Média diária
+            consumoDiarioMedio /= 7;
 
             int diasRestantes = (int) Math.ceil(estoqueAtual / consumoDiarioMedio);
             daysUntilStockOut.put(produto, diasRestantes);
