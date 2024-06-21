@@ -1,31 +1,28 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: 
+title: Stockify
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: de Sá Camargo
+    given-names: Arthur
+  - family-names: Lanza Candido
+    given-names: Gabriel Felipe
+  - family-names: Lourenço Araujo Dal Bianco Gonzaga
+    given-names: Luca 
+  - family-names: Lopes de Paula
+    given-names: Paulo Henrique
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: do Val Machado
+    given-names: Max
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Ferreira de Carvalho
+    given-names: Walisson
 keywords:
-  - 
-  - 
-repository-code: 
+  - Estoque
+  - Gestão inteligente
+  - Predição
+repository-code: https://github.com/ICEI-PUC-Minas-CC-TI/plmg-cc-ti2-2024-1-g04-stockify/tree/master
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2022-07-14
+date-released: 2024-06-21
